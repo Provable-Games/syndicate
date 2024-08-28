@@ -30,4 +30,4 @@ jobs:
         run: curl -L https://raw.githubusercontent.com/foundry-rs/starknet-foundry/master/scripts/install.sh | bash && source ~/.bashrc && snfoundryup -v ${{ env.FOUNDRY_VERSION }}
 
       - name: Build and Test ${{ matrix.contract }}
-        run: cd contracts/${{ matrix.contract }} && snforge test --max-n-steps ${{ env.MAX_N_STEPS }}
+        run: snforge test --max-n-steps ${{ env.MAX_N_STEPS }}
