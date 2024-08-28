@@ -1,0 +1,21 @@
+{
+	"name": "Rust",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"starkware.cairo1",
+				"github.copilot"
+			]
+		}
+	},
+	"containerEnv": {
+        "STARKNET_NETWORK":"alpha-goerli",
+		"STARKNET_WALLET":"starkware.starknet.wallets.open_zeppelin.OpenZeppelinAccount",
+		"CAIRO_COMPILER_DIR":"~/.cairo/target/release/",
+		"CAIRO_COMPILER_ARGS":"--add-pythonic-hints"
+    },
+	"postCreateCommand": "git config --global core.editor \"code --wait\" && bash scripts/starkli_setup.sh"
+}
