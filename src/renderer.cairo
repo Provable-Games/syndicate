@@ -152,13 +152,38 @@ fn generate_crown() -> ByteArray {
     "<g transform='translate(25,17) scale(2.68)' style='fill: #D3AF37;'>" + crown() + "</g>"
 }
 
+fn get_community_name(communityId: u8) -> ByteArray {
+    let mut community_name: ByteArray = "";
+    if (communityId == 1) {
+        community_name = "Dojo";
+    } else if (communityId == 2) {
+        community_name = "Starkware";
+    } else if (communityId == 3) {
+        community_name = "Argent";
+    } else if (communityId == 4) {
+        community_name = "Dope Wars";
+    } else if (communityId == 5) {
+        community_name = "1337";
+    } else if (communityId == 6) {
+        community_name = "Stark ID";
+    } else if (communityId == 7) {
+        community_name = "Defi Spring";
+    } else if (communityId == 8) {
+        community_name = "Golden Token";
+    } else if (communityId == 9) {
+        community_name = "Loot";
+    }
+
+    community_name
+}
+
 /// @title Create Metadata
 /// @author Syndicate
 /// @notice Generates a metadata string for an adventurer token
 /// @param token_id The token ID
 /// @param community The community name
 /// @return The metadata string
-fn create_metadata(token_id: felt252, community: ByteArray) -> ByteArray {
+fn create_metadata(token_id: felt252, communityId: u8) -> ByteArray {
     let rect = create_rect();
 
     let logo_element = generate_logo();
@@ -195,7 +220,7 @@ fn create_metadata(token_id: felt252, community: ByteArray) -> ByteArray {
 
     let community: ByteArray = JsonImpl::new()
         .add("trait", "community")
-        .add("value", community)
+        .add("value", get_community_name(communityId))
         .build();
 
     let attributes = array![community,].span();
@@ -211,29 +236,4 @@ mod tests {
     use core::array::ArrayTrait;
     use super::{create_metadata};
     use snforge_std::{start_cheat_block_timestamp_global};
-
-
-    #[test]
-    fn test_syndicate_loot() {
-        let loot = create_metadata(1, "Loot");
-        println!("dojo token_uri: {}", loot);
-    }
-
-    #[test]
-    fn test_syndicate_dojo() {
-        let dojo = create_metadata(2, "Dojo");
-        println!("dojo token_uri: {}", dojo);
-    }
-
-    #[test]
-    fn test_syndicate_argent() {
-        let argent = create_metadata(3, "Argent");
-        println!("argent token_uri: {}", argent);
-    }
-
-    #[test]
-    fn test_syndicate_starkware() {
-        let starkware = create_metadata(4, "Starkware");
-        println!("starkware token_uri: {}", starkware);
-    }
 }

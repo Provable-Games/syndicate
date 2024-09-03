@@ -3,10 +3,11 @@ use core::starknet::ContractAddress;
 #[starknet::contract]
 mod Syndicate {
     use super::IERC721Mixin;
-    use core::starknet::{ContractAddress, contract_address_const};
+    use core::starknet::{ContractAddress, contract_address_const, storage::{Map}};
     use openzeppelin_token::erc721::erc721::ERC721Component::InternalTrait;
     use openzeppelin_token::erc721::{ERC721Component, ERC721HooksEmptyImpl};
     use openzeppelin_introspection::src5::SRC5Component;
+    use syndicate::renderer::{create_metadata};
 
     component!(path: ERC721Component, storage: erc721, event: ERC721Event);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
@@ -19,6 +20,8 @@ mod Syndicate {
 
     #[storage]
     struct Storage {
+        _collectionTokenEndIndex: Map::<u8, u16>,
+        _isCollectionAirdropped: Map::<u8, bool>,
         #[substorage(v0)]
         erc721: ERC721Component::Storage,
         #[substorage(v0)]
@@ -97,7 +100,29 @@ mod Syndicate {
 
         fn token_uri(self: @ContractState, token_id: u256) -> ByteArray {
             self.erc721._require_owned(token_id);
-            "todo"
+
+            let mut community_id: u8 = 0;
+            if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(1)) {
+                community_id = 1;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(2)) {
+                community_id = 2;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(3)) {
+                community_id = 3;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(4)) {
+                community_id = 4;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(5)) {
+                community_id = 5;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(6)) {
+                community_id = 6;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(7)) {
+                community_id = 7;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(8)) {
+                community_id = 8;
+            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(9)) {
+                community_id = 9;
+            }
+
+            return create_metadata(token_id.try_into().unwrap(), community_id);
         }
 
         // IERC721CamelOnly
@@ -154,26 +179,257 @@ mod Syndicate {
             SRC5::supports_interface(self, interfaceId)
         }
 
-        fn airdrop(ref self: ContractState) {
-            _airdrop(ref self);
+        fn airdrop_dojo(ref self: ContractState) {
+            _airdrop_dojo(ref self);
+        }
+
+        fn airdrop_starkware(ref self: ContractState) {
+            _airdrop_starkware(ref self);
+        }
+
+        fn airdrop_argent(ref self: ContractState) {
+            _airdrop_argent(ref self);
+        }
+
+        fn airdrop_dope_wars(ref self: ContractState) {
+            _airdrop_dope_wars(ref self);
+        }
+
+        fn airdrop_1337(ref self: ContractState) {
+            _airdrop_1337(ref self);
+        }
+
+        fn airdrop_stark_id(ref self: ContractState) {
+            _airdrop_stark_id(ref self);
+        }
+
+        fn airdrop_defi_spring(ref self: ContractState) {
+            _airdrop_defi_spring(ref self);
+        }
+
+        fn airdrop_golden_token(ref self: ContractState) {
+            _airdrop_golden_token(ref self);
+        }
+
+        fn airdrop_loot(ref self: ContractState) {
+            _airdrop_loot(ref self);
         }
     }
 
-    fn _airdrop(ref self: ContractState) -> u16 {
+    fn _assert_token_not_airdropped(self: @ContractState, communityId: u8) {
+        assert(
+            self._isCollectionAirdropped.read(communityId) == false, 'Collection already airdropped'
+        );
+    }
+
+    fn _assert_token_airdropped(self: @ContractState, communityId: u8) {
+        assert(
+            self._isCollectionAirdropped.read(communityId) == true, 'Collection already airdropped'
+        );
+    }
+
+    fn _airdrop_dojo(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 1);
         let mut token_count: u16 = 1;
 
         // mint dojo syndicate addresses
-        let mut dojo_addresses = get_dojo_addresses();
+        let mut addresses = get_dojo_addresses();
         loop {
-            match dojo_addresses.pop_front() {
+            match addresses.pop_front() {
                 Option::Some(address) => {
                     self.erc721.mint(*address, token_count.into());
                     token_count += 1;
-                    break;
                 },
                 Option::None(_) => { break; }
             };
         };
+
+        self._collectionTokenEndIndex.write(1, token_count);
+        self._isCollectionAirdropped.write(1, true);
+
+        token_count
+    }
+
+    fn _airdrop_starkware(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 2);
+        _assert_token_airdropped(@self, 1);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(1) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_starkware_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(2, token_count);
+        self._isCollectionAirdropped.write(2, true);
+
+        token_count
+    }
+
+    fn _airdrop_argent(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 3);
+        _assert_token_airdropped(@self, 2);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(2) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_argent_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(3, token_count);
+        self._isCollectionAirdropped.write(3, true);
+
+        token_count
+    }
+
+    fn _airdrop_dope_wars(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 4);
+        _assert_token_airdropped(@self, 3);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(3) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_dope_wars_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(4, token_count);
+        self._isCollectionAirdropped.write(4, true);
+
+        token_count
+    }
+
+    fn _airdrop_1337(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 5);
+        _assert_token_airdropped(@self, 4);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(4) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_1337_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(5, token_count);
+        self._isCollectionAirdropped.write(5, true);
+
+        token_count
+    }
+
+    fn _airdrop_stark_id(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 6);
+        _assert_token_airdropped(@self, 5);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(5) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_stark_id_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(6, token_count);
+        self._isCollectionAirdropped.write(6, true);
+
+        token_count
+    }
+
+    fn _airdrop_defi_spring(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 7);
+        _assert_token_airdropped(@self, 6);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(6) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_defi_spring_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(7, token_count);
+        self._isCollectionAirdropped.write(7, true);
+
+        token_count
+    }
+
+    fn _airdrop_golden_token(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 8);
+        _assert_token_airdropped(@self, 7);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(7) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_golden_token_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(8, token_count);
+        self._isCollectionAirdropped.write(8, true);
+
+        token_count
+    }
+
+    fn _airdrop_loot(ref self: ContractState) -> u16 {
+        _assert_token_not_airdropped(@self, 9);
+        _assert_token_airdropped(@self, 8);
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(8) + 1;
+
+        // mint dojo syndicate addresses
+        let mut addresses = get_loot_addresses();
+        loop {
+            match addresses.pop_front() {
+                Option::Some(address) => {
+                    self.erc721.mint(*address, token_count.into());
+                    token_count += 1;
+                },
+                Option::None(_) => { break; }
+            };
+        };
+
+        self._collectionTokenEndIndex.write(9, token_count);
+        self._isCollectionAirdropped.write(9, true);
 
         token_count
     }
@@ -182,103 +438,1608 @@ mod Syndicate {
     pub fn get_dojo_addresses() -> Span<ContractAddress> {
         array![
             contract_address_const::<
-                0x02c3F466e4e8C0255ff52ade0E4fC7E8024CCd8c530e58FB888C2d0D7BcF11B6
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x03C63FFBBB09b7E7D74F85e95c85255829Ad79b59E3D63Cb66E635c12fFAf08b
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x064fd0b4e9b1e0d61a13d431f59ddfeaa49fcd4f48aad799b5dfd5fedb45e77c
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x02Bc9bbD6aBdFc745918827D9438052d854F079F3Dd91739B45dfbe5B0f54B5C
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x069213226154069d250944a7CC15140BC45039924b9BbCda7Be4F15227654eC6
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x04e1E065942E03C1BaF4EBFF3563cee4230c83c3e53598800b8553FB3348b421
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x008b0aC0621b55aaa1E7F568C4CE66C3D078dd37849eE3a8d366bd89e0439a86
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x02CD97240DB3f679De98A729aE91EB996cAb9Fd92a9A578Df11a72F49bE1c356
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x04645f67e3e195420b2b4e63742153623e50c143ed8b89c91e3fb908fe87b168
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x04042b3F651F6d6Ff03b929437AdC30257333723970071b05cb0E2270C9dc385
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x065d2AB17338b5AffdEbAF95E2D79834B5f30Bac596fF55563c62C3c98700150
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x02dD93bcFc6DcB21083f9E045066c54A45e0AEFB00a6C79eB5286eE0e1801504
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x0013588bbA0f78e623497f52702ca3ECF420fc82c032182473DB95b9DC0bFe33
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x058E058Cc515404046B9A125531b92DFB9542B02829447381483520Df7E7E39e
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x0643948eef68D67CBd9A1853b6181B83f15D06953724Fd5347e922d40245B93C
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x069213226154069d250944a7CC15140BC45039924b9BbCda7Be4F15227654eC6
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x0628b9dE919e8d1Cfb31A4e435E0CA27F33a8DC71b7475fD1a122222A6eb2f89
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x02c3F466e4e8C0255ff52ade0E4fC7E8024CCd8c530e58FB888C2d0D7BcF11B6
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x0082Ab51630d38aa639599165B08CE9e92208de7A9f4a0b3147bfABE6D3eB763
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x0291c1dfe2ab9858fadf1000f2c0c14fd197fc56483239dc5e7d4a42be8efe04
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x03d87EE70baf292Cdc23C654153cFD711fF580a076d1dccc0dfd9D3eb62DF311
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x064fd0b4e9b1e0d61a13d431f59ddfeaa49fcd4f48aad799b5dfd5fedb45e77c
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x06F490C0ec49FE17148af6F83eBEBd9d31E5a06dC46BDBE5c5E0657c23A4fF4F
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x04645f67e3e195420b2b4e63742153623e50c143ed8b89c91e3fb908fe87b168
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x0695A65AF5F0f019153237122256401e65A15c9B53B86705A0F40CF59f8681BC
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x02CD97240DB3f679De98A729aE91EB996cAb9Fd92a9A578Df11a72F49bE1c356
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x02Bc9bbD6aBdFc745918827D9438052d854F079F3Dd91739B45dfbe5B0f54B5C
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x071538f6445e0c6179b786230a3e7b5ddee40b72673a9b5a395da20f4657bdca
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x04042b3F651F6d6Ff03b929437AdC30257333723970071b05cb0E2270C9dc385
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x06a519DCcd7Ed4D1aACD3975691AEEae47bF7f9F5b62Ed7C2D929D2E27A9CC5E
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x04042b3F651F6d6Ff03b929437AdC30257333723970071b05cb0E2270C9dc385
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x06a519DCcd7Ed4D1aACD3975691AEEae47bF7f9F5b62Ed7C2D929D2E27A9CC5E
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
             contract_address_const::<
-                0x06e493eaf86D4542dc26f11876693b9C330B3921eD47cC91D14A18e66B2e27Dd
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_starkware_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_argent_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_dope_wars_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_1337_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_stark_id_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_defi_spring_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_golden_token_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+        ]
+            .span()
+    }
+
+    #[inline(always)]
+    pub fn get_loot_addresses() -> Span<ContractAddress> {
+        array![
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
+            >(),
+            contract_address_const::<
+                0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
             >(),
         ]
             .span()
@@ -346,7 +2107,15 @@ pub trait IERC721Mixin<TState> {
     fn supports_interface(self: @TState, interface_id: felt252) -> bool;
     fn supportsInterface(self: @TState, interfaceId: felt252) -> bool;
 
-    fn airdrop(ref self: TState);
+    fn airdrop_dojo(ref self: TState);
+    fn airdrop_starkware(ref self: TState);
+    fn airdrop_argent(ref self: TState);
+    fn airdrop_dope_wars(ref self: TState);
+    fn airdrop_1337(ref self: TState);
+    fn airdrop_stark_id(ref self: TState);
+    fn airdrop_defi_spring(ref self: TState);
+    fn airdrop_golden_token(ref self: TState);
+    fn airdrop_loot(ref self: TState);
 }
 
 #[cfg(test)]
@@ -365,16 +2134,24 @@ mod tests {
 
         // Create a dispatcher
         let dispatcher = IERC721MixinDispatcher { contract_address };
-        dispatcher.airdrop();
+        dispatcher.airdrop_dojo();
+        dispatcher.airdrop_starkware();
+        dispatcher.airdrop_argent();
+        dispatcher.airdrop_dope_wars();
+        dispatcher.airdrop_1337();
+        dispatcher.airdrop_stark_id();
+        dispatcher.airdrop_defi_spring();
+        dispatcher.airdrop_golden_token();
+        dispatcher.airdrop_loot();
 
         // Test address
         let owner = starknet::contract_address_const::<
-            0x02c3F466e4e8C0255ff52ade0E4fC7E8024CCd8c530e58FB888C2d0D7BcF11B6
+            0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
         >();
 
         // Check balance and ownership
         let owner_balance = dispatcher.balance_of(owner);
-        assert(owner_balance == 1, 'Invalid owner balance');
+        assert(owner_balance == 507, 'Invalid owner balance');
 
         let token_owner = dispatcher.owner_of(1);
         assert(token_owner == owner, 'Invalid token owner');
@@ -387,7 +2164,7 @@ mod tests {
 
         // Check updated balances and ownership
         let new_owner_balance = dispatcher.balance_of(owner);
-        assert(new_owner_balance == 0, 'Invalid new owner balance');
+        assert(new_owner_balance == 506, 'Invalid new owner balance');
 
         let recipient_balance = dispatcher.balance_of(recipient);
         assert(recipient_balance == 1, 'Invalid recipient balance');
