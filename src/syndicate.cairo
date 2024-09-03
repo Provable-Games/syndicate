@@ -1,5 +1,14 @@
 use core::starknet::ContractAddress;
 
+#[starknet::interface]
+trait IGame<T> {
+    fn mint(
+        ref self: T, to: ContractAddress, beast: u8, prefix: u8, suffix: u8, level: u16, health: u16
+    );
+    fn isMinted(self: @T, beast: u8, prefix: u8, suffix: u8) -> bool;
+    fn getMinter(self: @T) -> ContractAddress;
+}
+
 #[starknet::contract]
 mod Syndicate {
     use super::IERC721Mixin;
@@ -7,7 +16,7 @@ mod Syndicate {
     use openzeppelin_token::erc721::erc721::ERC721Component::InternalTrait;
     use openzeppelin_token::erc721::{ERC721Component, ERC721HooksEmptyImpl};
     use openzeppelin_introspection::src5::SRC5Component;
-    use syndicate::renderer::{create_metadata};
+    use syndicate::renderer::create_metadata;
 
     component!(path: ERC721Component, storage: erc721, event: ERC721Event);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
@@ -102,27 +111,28 @@ mod Syndicate {
             self.erc721._require_owned(token_id);
 
             let mut community_id: u8 = 0;
-            if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(1)) {
+            if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(1)) {
                 community_id = 1;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(2)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(2)) {
                 community_id = 2;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(3)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(3)) {
                 community_id = 3;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(4)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(4)) {
                 community_id = 4;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(5)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(5)) {
                 community_id = 5;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(6)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(6)) {
                 community_id = 6;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(7)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(7)) {
                 community_id = 7;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(8)) {
+            } else if (token_id.try_into().unwrap() < self._collectionTokenEndIndex.read(8)) {
                 community_id = 8;
-            } else if (token_id.try_into().unwrap() <= self._collectionTokenEndIndex.read(9)) {
+            } else {
                 community_id = 9;
             }
 
-            return create_metadata(token_id.try_into().unwrap(), community_id);
+            // TODO: Get win from game contract
+            return create_metadata(token_id.try_into().unwrap(), community_id, false);
         }
 
         // IERC721CamelOnly
@@ -223,9 +233,7 @@ mod Syndicate {
     }
 
     fn _assert_token_airdropped(self: @ContractState, communityId: u8) {
-        assert(
-            self._isCollectionAirdropped.read(communityId) == true, 'Collection already airdropped'
-        );
+        assert(self._isCollectionAirdropped.read(communityId) == true, 'Not ready for airdrop');
     }
 
     fn _airdrop_dojo(ref self: ContractState) -> u16 {
@@ -253,7 +261,7 @@ mod Syndicate {
     fn _airdrop_starkware(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 2);
         _assert_token_airdropped(@self, 1);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(1) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(1);
 
         // mint dojo syndicate addresses
         let mut addresses = get_starkware_addresses();
@@ -276,7 +284,7 @@ mod Syndicate {
     fn _airdrop_argent(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 3);
         _assert_token_airdropped(@self, 2);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(2) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(2);
 
         // mint dojo syndicate addresses
         let mut addresses = get_argent_addresses();
@@ -299,7 +307,7 @@ mod Syndicate {
     fn _airdrop_dope_wars(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 4);
         _assert_token_airdropped(@self, 3);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(3) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(3);
 
         // mint dojo syndicate addresses
         let mut addresses = get_dope_wars_addresses();
@@ -322,7 +330,7 @@ mod Syndicate {
     fn _airdrop_1337(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 5);
         _assert_token_airdropped(@self, 4);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(4) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(4);
 
         // mint dojo syndicate addresses
         let mut addresses = get_1337_addresses();
@@ -345,7 +353,7 @@ mod Syndicate {
     fn _airdrop_stark_id(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 6);
         _assert_token_airdropped(@self, 5);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(5) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(5);
 
         // mint dojo syndicate addresses
         let mut addresses = get_stark_id_addresses();
@@ -368,7 +376,7 @@ mod Syndicate {
     fn _airdrop_defi_spring(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 7);
         _assert_token_airdropped(@self, 6);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(6) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(6);
 
         // mint dojo syndicate addresses
         let mut addresses = get_defi_spring_addresses();
@@ -391,7 +399,7 @@ mod Syndicate {
     fn _airdrop_golden_token(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 8);
         _assert_token_airdropped(@self, 7);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(7) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(7);
 
         // mint dojo syndicate addresses
         let mut addresses = get_golden_token_addresses();
@@ -414,7 +422,7 @@ mod Syndicate {
     fn _airdrop_loot(ref self: ContractState) -> u16 {
         _assert_token_not_airdropped(@self, 9);
         _assert_token_airdropped(@self, 8);
-        let mut token_count: u16 = self._collectionTokenEndIndex.read(8) + 1;
+        let mut token_count: u16 = self._collectionTokenEndIndex.read(8);
 
         // mint dojo syndicate addresses
         let mut addresses = get_loot_addresses();
@@ -2127,31 +2135,66 @@ mod tests {
     };
     use super::{IERC721MixinDispatcher, IERC721MixinDispatcherTrait, Syndicate::get_dojo_addresses};
 
+    // #[test]
+    // fn test_balance_counts() {
+    //     let contract = declare("Syndicate").unwrap();
+    //     let (contract_address, _) = contract.deploy(@array![]).unwrap();
+    //     // Create a dispatcher
+    //     let dispatcher = IERC721MixinDispatcher { contract_address };
+
+    //     let dojo_addresses = dispatcher.get_dojo_addresses();
+
+    //     println!("dojo addresses: {}", dojo_addresses);
+    // }
+
     #[test]
     fn test_erc721_basic_functionality() {
         let contract = declare("Syndicate").unwrap();
         let (contract_address, _) = contract.deploy(@array![]).unwrap();
-
-        // Create a dispatcher
-        let dispatcher = IERC721MixinDispatcher { contract_address };
-        dispatcher.airdrop_dojo();
-        dispatcher.airdrop_starkware();
-        dispatcher.airdrop_argent();
-        dispatcher.airdrop_dope_wars();
-        dispatcher.airdrop_1337();
-        dispatcher.airdrop_stark_id();
-        dispatcher.airdrop_defi_spring();
-        dispatcher.airdrop_golden_token();
-        dispatcher.airdrop_loot();
 
         // Test address
         let owner = starknet::contract_address_const::<
             0x07bc3639e3e1aa3251a19c60402300085fcb5a9ea1c09ac6aa7dc45aef68e1c1
         >();
 
-        // Check balance and ownership
+        // Create a dispatcher
+        let dispatcher = IERC721MixinDispatcher { contract_address };
+
+        dispatcher.airdrop_dojo();
         let owner_balance = dispatcher.balance_of(owner);
-        assert(owner_balance == 507, 'Invalid owner balance');
+        assert(owner_balance == 43, 'Invalid dojo airdrop');
+
+        dispatcher.airdrop_starkware();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 82, 'Invalid starkware airdrop');
+
+        dispatcher.airdrop_argent();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 105, 'Invalid argent airdrop');
+
+        dispatcher.airdrop_dope_wars();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 118, 'Invalid dope wars airdrop');
+
+        dispatcher.airdrop_1337();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 131, 'Invalid 1337 airdrop');
+
+        dispatcher.airdrop_stark_id();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 296, 'Invalid stark id airdrop');
+
+        dispatcher.airdrop_defi_spring();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 347, 'Invalid defi spring airdrop');
+
+        dispatcher.airdrop_golden_token();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 507, 'Invalid golden token airdrop');
+
+        dispatcher.airdrop_loot();
+        let owner_balance = dispatcher.balance_of(owner);
+        assert(owner_balance == 516, 'Invalid loot airdrop');
 
         let token_owner = dispatcher.owner_of(1);
         assert(token_owner == owner, 'Invalid token owner');
@@ -2164,17 +2207,13 @@ mod tests {
 
         // Check updated balances and ownership
         let new_owner_balance = dispatcher.balance_of(owner);
-        assert(new_owner_balance == 506, 'Invalid new owner balance');
+        assert(new_owner_balance == 515, 'Invalid new owner balance');
 
         let recipient_balance = dispatcher.balance_of(recipient);
         assert(recipient_balance == 1, 'Invalid recipient balance');
 
         let new_token_owner = dispatcher.owner_of(1);
         assert(new_token_owner == recipient, 'Invalid new token owner');
-
-        // Check token URI
-        let token_uri = dispatcher.token_uri(1);
-        assert(token_uri == "todo", 'Invalid token URI');
 
         // Check name and symbol
         let name = dispatcher.name();
