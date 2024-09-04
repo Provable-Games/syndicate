@@ -898,280 +898,148 @@ mod Syndicate {
     pub fn get_stark_id_addresses() -> Span<ContractAddress> {
         array![
             contract_address_const::<
-                0x70512c3a3c5e90a3ef0bed1078ad8ec12bf1085c05f2f10f8413b7879bddfcf
-            >(),
-            contract_address_const::<
-                0x20e80461978b299044b02ddad416be608da799e56d09fbc8054698c255d3b30
-            >(),
-            contract_address_const::<
-                0x4538ac5e55f9eaa528c2fd85480b4bca3300aa299f862ad745b2c3b91030c6e
-            >(),
-            contract_address_const::<
-                0x4645f67e3e195420b2b4e63742153623e50c143ed8b89c91e3fb908fe87b168
-            >(),
-            contract_address_const::<
-                0x2e7cfcfd4e188ce34021316b3e0927617412ec04b987219054630d96a2cf32a
-            >(),
-            contract_address_const::<
-                0x7bae6a7e209cfe5d2f29e84b226f68e9d538d9e36db09f1363120adb6f5d0a9
-            >(),
-            contract_address_const::<
-                0x339266160ecb59a9a218fe57fc6b5b4d2d0836f28585885d2672561f1aa1502
-            >(),
-            contract_address_const::<
-                0x3156478365db748eb2a86af3e16d0a9ae9e4436ef333928afdf943d111faf81
-            >(),
-            contract_address_const::<
-                0x53183bf5472d0f00e74a2803305e24202906a2c8ed9aadc973bbff80ce23fdd
-            >(),
-            contract_address_const::<
-                0x6fb5e4e650bb6ceb80923c008e81122129092efc7e6d6f3f5c9ac4eead25355
-            >(),
-            contract_address_const::<
-                0x56efa5e1d175a0482c8f47ed9e709e0f058e0c0beaae533297bcd8d097d7d7c
-            >(),
-            contract_address_const::<
-                0x2439d94de5d1f4867e04614e83f53496339e81cd8f37c17a579dac215b87c4
-            >(),
-            contract_address_const::<
-                0x579ed214135f8ed807110d417e47171bdbf9f2c82823361e85428e05f00498
-            >(),
-            contract_address_const::<
-                0x6b82a7d520520170c12dcbbaa3c6ea1e8d92c4d5f666da0b53b849f50ba6e34
-            >(),
-            contract_address_const::<
-                0x3a5584d8d722619c53af06f70c0241212cc6a6a976ab16e99eb4af5ae23f7ae
-            >(),
-            contract_address_const::<
-                0x3b5d43847dcc4384c5fbcd2e1994564bb35c054138e9572d36d2b5e72462a38
-            >(),
-            contract_address_const::<
-                0x31777a9450c2fa4f1ff347174f1737a859afd81170ecdbb1f195f0898af305b
-            >(),
-            contract_address_const::<
-                0x2dbcf334dd4594704d42669c2165717373075195e0516d7057d8bdab97a86e8
-            >(),
-            contract_address_const::<
-                0x3af3a38ff300f5e49c635d4da0811bca045b26140a4e6b87b9f738d3866cac
-            >(),
-            contract_address_const::<
-                0x769798a3c7125be92d025bfb14002ab7c18586d3ecc8f36f0c0e002451f9416
-            >(),
-            contract_address_const::<
-                0x37d6e90bfda5a1c498823569873b99b20ae538c0a1dc8e7e0707251e71c2c0f
-            >(),
-            contract_address_const::<
-                0x5095078578a59f8a9c17df97188db1b59574c6d4836dd3e705fe8537624228a
-            >(),
-            contract_address_const::<
-                0x91549c2fe52f07266a21228406131df81b39a7f4793cf23c8cb30d4c667850
-            >(),
-            contract_address_const::<
-                0x12519114a36635fd2d2c0a9a6d4d597d77717d0be6fef94f5b8fe43ff27cef2
-            >(),
-            contract_address_const::<
-                0x2ac37455cfcfbc20e57fb7dc6289cedc0b9a9ebd0ffc550d05a40f1a2b53513
-            >(),
-            contract_address_const::<
-                0x6ac7327a5685322a68956b14fb2eb7c632133356babade0d0e0dc4951a7a457
-            >(),
-            contract_address_const::<
-                0x64fb7f85fd9dee10c313696b0aef1f4afc888ce8422edbc2f1695ec5ed152e9
-            >(),
-            contract_address_const::<
-                0x215c710b36cb8f097195a04bce89c5a018cde1ef00d5c1ed9abc949333f5d50
-            >(),
-            contract_address_const::<
-                0x643948eef68d67cbd9a1853b6181b83f15d06953724fd5347e922d40245b93c
-            >(),
-            contract_address_const::<
-                0x40199f68dc47419aea94f599691b9846606c2344b8a3368462d4395436f8832
-            >(),
-            contract_address_const::<
-                0x4fc81b449cb77219ea7dc3613040725284cd1aca12e0152cde9dec11f9944c2
-            >(),
-            contract_address_const::<
-                0x4e2bc9e8c76166741626ab7c60591de00b253d4f07901d6c35c99cdfda6af39
-            >(),
-            contract_address_const::<
-                0x25697a9922bb9cc5421d839ef6a9ea7eed506fe40c4c00e8b27a83ce39aa8f9
-            >(),
-            contract_address_const::<
-                0x4e0853d961c4fd90472ed0002c122bb835fa473d5b97a1831be60c2e8171f48
-            >(),
-            contract_address_const::<
-                0x7d09ffe79ffbe202fb1ce75bf2117699fcf2a5cf0c5a894ef36b8a99561059f
-            >(),
-            contract_address_const::<
-                0x446d52b79c9aacdc7d96f9a14aa0bd4ff4391c59b6658b45a9b4a878eac298a
-            >(),
-            contract_address_const::<
-                0x7cc1b280f690c333ae58b69c23eeb64d3547e731b61a3b533df58f532054c63
-            >(),
-            contract_address_const::<
-                0x3e83ac36dc59f863b679da7a6dd9a79d2458434e1260bc56cabd3c92add32cf
-            >(),
-            contract_address_const::<
-                0x5f0cc6c07fb093c2d2288b28349fd685b34beda8e2219b1e3c9a8f95af6d60f
-            >(),
-            contract_address_const::<
-                0xcd1b505de14500f9266c142b7029825917952ec95fae23661665c68d04f191
-            >(),
-            contract_address_const::<
-                0x414b6615b7df626a5bf81c640520617134c1e83c7f321f4febc62b8f804b49b
-            >(),
-            contract_address_const::<
-                0x1c70d3bab5db43b6a74b62ed2df6df58ce787f2f710d474fab75101de0d622a
-            >(),
-            contract_address_const::<
-                0x407be6577bd8c295f132471af863e004493988b922f3fc23a2729d7ba9445b8
-            >(),
-            contract_address_const::<
-                0x302f17a5a997ef73e2cc0db8a1e34b0d446267c5dd619f4b059cdadfd5bc4bd
-            >(),
-            contract_address_const::<
-                0x260a8fceaaa8fa0ca58a6808d7a99a3c438e4b5bf3d1e2bc136ee7b57be7b45
-            >(),
-            contract_address_const::<
-                0x3beddffffc4fb68c202b83eb967e5f9aa78fb6e9007d60af946092365f618ea
-            >(),
-            contract_address_const::<
-                0x35719eead7f2b1686caf4532e7c03f4e738aefa83d8487401e93a9b5df42ebe
-            >(),
-            contract_address_const::<
-                0x39ebc7d76900fcaa88c547d3d5efd229f129ab6a074e2bb3845bc007c844766
-            >(),
-            contract_address_const::<
-                0x43f05485eafa41da1cd8442069a72a6264dfced0ad1af298fd235d6df91f735
-            >(),
-            contract_address_const::<
-                0x17af00991dc672ebaecb73fb81b9b271c927d6cb56836b1cf7d15bce367a946
-            >(),
-            contract_address_const::<
-                0x69a07011db89540271d06fbc694c8391a60b12a3c0b15c4f839d36cea4dafd0
-            >(),
-            contract_address_const::<
-                0x57e890ede07115ef0aa389b2c7de43decf9c2e5092e76b9baab25856a42b69e
-            >(),
-            contract_address_const::<
-                0x6a5b96b995a7e96c67f77b7acf8bc129633391fe9d446e3c644f8327044927a
-            >(),
-            contract_address_const::<
-                0x7a82e2b22da3704771e15540f4c6679f425d9fb87d091b26e0f17b1a4f26ab
-            >(),
-            contract_address_const::<
-                0x763149c1330e9bf71bc4ab6e28b02aca9670b0fb2627602d8d417c2102a9504
-            >(),
-            contract_address_const::<
-                0x3f8e489dceeb81da736cdc089a97dc232d6fdc1a9464981234b0feb63c4f2e9
-            >(),
-            contract_address_const::<
-                0xc396c0076a8aa28bc4373312a7035e75f422a70e87c494655e40753c2d13fe
-            >(),
-            contract_address_const::<
-                0x30157243e521acc690964a8978bd680c5ca969044967892b7c5d0afc221ccab
-            >(),
-            contract_address_const::<
-                0x5888d8f6233c824ea415b3bfc27706f9fe815de69e2c8934e603f857861c04f
-            >(),
-            contract_address_const::<
-                0x68cc9f894e54217e67418cfccf51ac837a2db8535564566489eed5ff71b3df1
-            >(),
-            contract_address_const::<
-                0x3cf06ddb5c66f3a1ec139cdeb67f9b93d18b3e6d24c91590fe926fee3c8188a
-            >(),
-            contract_address_const::<
-                0x194bc89b7e9152229e3783cc6b8fa51058943f58ff5d73276381c142ccd35a3
-            >(),
-            contract_address_const::<
-                0x9de8fa6ae2283733ff9cccd3481621c1ccfcceacd4fe6f72251cf4b991cfbf
-            >(),
-            contract_address_const::<
-                0x1fb62ac54f9fa99e1417f83bcb88485556427397f717ed4e7233bc99be31bff
-            >(),
-            contract_address_const::<
-                0x29993951297c30b5b6b3c967e35632765e539e90654c9fc87bcc5cff29c4cdc
-            >(),
-            contract_address_const::<
-                0x3d2ee0de133d84ba27c0f7d9103efa574dc99743ae4b7c7cbd5b97ced5914e
-            >(),
-            contract_address_const::<
-                0x50b2d2e010121e00455f3024c2ba49399f8147ef865f48833807ed51cebcb3e
-            >(),
-            contract_address_const::<
-                0x6500b2b53e341c23d7be329b33ae307044179dbfb5a5d0576aad9ddf0ae4d70
-            >(),
-            contract_address_const::<
-                0xd6be762f81bc91502be53c28f2325c03e0b7073f7f3796f8cfc5804863ba3a
+                0x70d63df9b573f86ccd002d78f19b242232f7e108ae8652b7756ff46734d8b35
             >(),
             contract_address_const::<
                 0x66146a7433c0c258029e436efc3b63cd8b2bc461709b1b7f1678710c51bf433
             >(),
             contract_address_const::<
-                0x2c71de70b40b00e3dd6f43ed568bf4b194fab0189df68c54d25cbbb9b9e3d49
-            >(),
-            contract_address_const::<
-                0x378b9c3cb6be32d087d1af8a91c1484226ac8b009f502e12b06ffd46d94f014
-            >(),
-            contract_address_const::<
-                0x53b36f0c83047272633c00db0f5db890dd4bec745446dc17dabbc6828e403a2
-            >(),
-            contract_address_const::<
-                0x2dd93bcfc6dcb21083f9e045066c54a45e0aefb00a6c79eb5286ee0e1801504
-            >(),
-            contract_address_const::<
-                0x4fdbfdfae3661ea118167b34b0c91594342b5cc522824a704adb4db86f86a31
-            >(),
-            contract_address_const::<
-                0x170fc25e93098ba290e2b35eafe186c70a7339892bc93bb6fe011cc17e1de82
-            >(),
-            contract_address_const::<
-                0x4617e6fc0736dab08c7e6312769cbb766d59e65ad96a71e4b71d868cf628b1b
-            >(),
-            contract_address_const::<
-                0x6c1fbe5cf8368a21366295aadb99fd41226c8629d7778fa8748286f9ccb0d0c
-            >(),
-            contract_address_const::<
-                0x8a0d3c539c0e0b46d44f82705105ebafee06960485c0ab86db2fc5496f9ed6
-            >(),
-            contract_address_const::<
-                0x612d4df45bdc9c392a26905f8612796c5f9614711f18683f9d6d92187a3d584
-            >(),
-            contract_address_const::<
-                0x1d3eddff57fd8bf2772c7d8e7603e34f85340b4e1a334afa5d07180e72db7e3
-            >(),
-            contract_address_const::<
-                0x498a356d8d20d581d06ca763d567ff7fc419f620dc7ca6e416c98713ef0b617
-            >(),
-            contract_address_const::<
-                0x872f80d09a42932203ec6ddab79f73268828c9aa29c5966d4c320660e6e847
-            >(),
-            contract_address_const::<
-                0x32845a5a9b0c507128dd7127576a301729ed968fc137cb7664716fcd8e704a0
-            >(),
-            contract_address_const::<
-                0x5925e7c6e9f7cef652ace81047acb6870785de444ce8c54010ee9f0cba84d2e
-            >(),
-            contract_address_const::<
-                0x63cb63d22893aef8bad2d8d123b09542787349198cbb165bef4ce7b533afe21
-            >(),
-            contract_address_const::<
-                0x7f84a8872323cf9115a5f45157e2aa13fce3075fd946a93ffcd8ef25ac262d9
-            >(),
-            contract_address_const::<
-                0x937c04d26691ee27f414298ace9c6939cc92a8f7c570f3ef6477834c5c0280
-            >(),
-            contract_address_const::<
-                0x52119c345e6c7ef3997b3b2f3c01323afc4bd9bc75aa20e4cb73a8443848b1a
+                0x34325479e4ce970feb1129f0890683f2cfb1a28be2516450fc110b38c075170
             >(),
             contract_address_const::<
                 0x3858f95e136b3ee520b224dbb7f6b1dc954d993fc773b73785ca949733fbd3a
             >(),
             contract_address_const::<
-                0x7360aee5743eba462e17e1886cca91be06ad5110fd3142d284332af3fc7248b
+                0x3d87ee70baf292cdc23c654153cfd711ff580a076d1dccc0dfd9d3eb62df311
+            >(),
+            contract_address_const::<
+                0x2dd93bcfc6dcb21083f9e045066c54a45e0aefb00a6c79eb5286ee0e1801504
+            >(),
+            contract_address_const::<
+                0x53b36f0c83047272633c00db0f5db890dd4bec745446dc17dabbc6828e403a2
+            >(),
+            contract_address_const::<
+                0x4c028c91a17bdb030dac30b84daa3136fdba185e4763f35c4363562095a0689
+            >(),
+            contract_address_const::<
+                0x61b6c0a78f9edf13cea17b50719f3344533fadd470b8cb29c2b4318014f52d3
+            >(),
+            contract_address_const::<
+                0x620b2e12fb8d195ce384512d65fbbddbdea26c4610a49f7630282ea7e55077c
+            >(),
+            contract_address_const::<
+                0x378b9c3cb6be32d087d1af8a91c1484226ac8b009f502e12b06ffd46d94f014
+            >(),
+            contract_address_const::<
+                0x2c71de70b40b00e3dd6f43ed568bf4b194fab0189df68c54d25cbbb9b9e3d49
+            >(),
+            contract_address_const::<
+                0x52119c345e6c7ef3997b3b2f3c01323afc4bd9bc75aa20e4cb73a8443848b1a
+            >(),
+            contract_address_const::<
+                0x460f40b56facb566fa3269ccb89d8fe6c1b50e2cecc47c660be59f17d95ce5e
+            >(),
+            contract_address_const::<
+                0x7e17ab90d2abf29b1a2b418567067d7f1ce49602feb29ac11901e35fb965e
+            >(),
+            contract_address_const::<
+                0x179caf1b35202a0a544109cc04caf07a813755d1a15927e025ad874108b0543
+            >(),
+            contract_address_const::<
+                0xd6be762f81bc91502be53c28f2325c03e0b7073f7f3796f8cfc5804863ba3a
+            >(),
+            contract_address_const::<
+                0x1fb62ac54f9fa99e1417f83bcb88485556427397f717ed4e7233bc99be31bff
+            >(),
+            contract_address_const::<
+                0xece2ddb6f35cfd1c8cd4fb3adffc65048b15a43e3111030c44036493260797
+            >(),
+            contract_address_const::<
+                0x2ff9d1ccff043c05753dbf6c2c47be24947ae5ed429843cd8ec7c774454072d
+            >(),
+            contract_address_const::<
+                0x7bae6a7e209cfe5d2f29e84b226f68e9d538d9e36db09f1363120adb6f5d0a9
+            >(),
+            contract_address_const::<
+                0x579ed214135f8ed807110d417e47171bdbf9f2c82823361e85428e05f00498
+            >(),
+            contract_address_const::<
+                0x6500b2b53e341c23d7be329b33ae307044179dbfb5a5d0576aad9ddf0ae4d70
+            >(),
+            contract_address_const::<
+                0x577b5a148a45f7ed608f8755d0ef01bc0e1b9f3ce7d33a521fc401fba13acc6
+            >(),
+            contract_address_const::<
+                0x6fb5e4e650bb6ceb80923c008e81122129092efc7e6d6f3f5c9ac4eead25355
+            >(),
+            contract_address_const::<
+                0x5b2de21befe429642ca311d522035e3990c4433cd3b91cabb3019ceebbd87ed
+            >(),
+            contract_address_const::<
+                0x3d85759add09b3318a002ddc57f81c67286fdde869cbbdaa39ceb17c0661e6f
             >(),
             contract_address_const::<
                 0x39b627a7f29423e7cc7df35002c8f3992311b62f880d2f472f2d6e7432e91b9
+            >(),
+            contract_address_const::<
+                0x4fd13c902c6825caf81f059eccea5824d4c84bdc3c6af30696b6f7be5551e2e
+            >(),
+            contract_address_const::<
+                0x6b82a7d520520170c12dcbbaa3c6ea1e8d92c4d5f666da0b53b849f50ba6e34
+            >(),
+            contract_address_const::<
+                0x643948eef68d67cbd9a1853b6181b83f15d06953724fd5347e922d40245b93c
+            >(),
+            contract_address_const::<
+                0x43b0701e1a6f1735703df4efcd7af0bc74646bb2e397d44bc52d2c0f51fd8a1
+            >(),
+            contract_address_const::<
+                0x4645f67e3e195420b2b4e63742153623e50c143ed8b89c91e3fb908fe87b168
+            >(),
+            contract_address_const::<
+                0x74f91d284351a8603933b648684b6a990126d7c78a1b867353a57a3bc2097da
+            >(),
+            contract_address_const::<
+                0x30f5e98e04383d649ee604f09b91e8263d7e4f60b7647e5d4831741aad25e78
+            >(),
+            contract_address_const::<
+                0x121edbee8028cf9ef6c36e823da961c6b2909b51040d0c9cb6f1a4fe4e526ae
+            >(),
+            contract_address_const::<
+                0x4fdbfdfae3661ea118167b34b0c91594342b5cc522824a704adb4db86f86a31
+            >(),
+            contract_address_const::<
+                0x6e01d4e101ad2f8daaeddac7d11ae85cabe0f79d5a6c16b15b92c10975a40b1
+            >(),
+            contract_address_const::<
+                0x65d2ab17338b5affdebaf95e2d79834b5f30bac596ff55563c62c3c98700150
+            >(),
+            contract_address_const::<
+                0x2bc9bbd6abdfc745918827d9438052d854f079f3dd91739b45dfbe5b0f54b5c
+            >(),
+            contract_address_const::<
+                0x628b9de919e8d1cfb31a4e435e0ca27f33a8dc71b7475fd1a122222a6eb2f89
+            >(),
+            contract_address_const::<
+                0x7360aee5743eba462e17e1886cca91be06ad5110fd3142d284332af3fc7248b
+            >(),
+            contract_address_const::<
+                0x438fcf3c887299aeaf6d3ee8ef14626219b7e4eb1f06a0a3a5cbeddb041d1d8
+            >(),
+            contract_address_const::<
+                0x7b86946381b25725ad72eaf5d2cdf9e87e2b98a70980576d212fa7fcc6c9701
+            >(),
+            contract_address_const::<
+                0x5095078578a59f8a9c17df97188db1b59574c6d4836dd3e705fe8537624228a
+            >(),
+            contract_address_const::<
+                0x70512c3a3c5e90a3ef0bed1078ad8ec12bf1085c05f2f10f8413b7879bddfcf
+            >(),
+            contract_address_const::<
+                0x3484e299d480b980c420b895850ee01b1c39011731d1b657ecd6fbf142b6939
+            >(),
+            contract_address_const::<
+                0x708ae8b37a4676ed706e1f2d9840bde788df794aafb57621b9ae1eb2a172c10
             >(),
             contract_address_const::<
                 0x6820aad506f7869ce79a5d22a3fe06bc03f53ce4a35db63c7082d2daddcca58
@@ -1180,91 +1048,136 @@ mod Syndicate {
                 0x3e7236bb88cc60abe553366ac11aeac445ab57c45269e9f5f0917c7d69ac581
             >(),
             contract_address_const::<
-                0x3d85759add09b3318a002ddc57f81c67286fdde869cbbdaa39ceb17c0661e6f
+                0x5e1093303fef57563f6ccf3dbd5b3f1c3a5eb31c12e256dcb9066f5ca17f5b4
             >(),
             contract_address_const::<
-                0x6e01d4e101ad2f8daaeddac7d11ae85cabe0f79d5a6c16b15b92c10975a40b1
-            >(),
-            contract_address_const::<
-                0x3d87ee70baf292cdc23c654153cfd711ff580a076d1dccc0dfd9d3eb62df311
-            >(),
-            contract_address_const::<
-                0x34325479e4ce970feb1129f0890683f2cfb1a28be2516450fc110b38c075170
-            >(),
-            contract_address_const::<
-                0x460f40b56facb566fa3269ccb89d8fe6c1b50e2cecc47c660be59f17d95ce5e
-            >(),
-            contract_address_const::<
-                0x708ae8b37a4676ed706e1f2d9840bde788df794aafb57621b9ae1eb2a172c10
-            >(),
-            contract_address_const::<
-                0x61b6c0a78f9edf13cea17b50719f3344533fadd470b8cb29c2b4318014f52d3
-            >(),
-            contract_address_const::<
-                0x4c028c91a17bdb030dac30b84daa3136fdba185e4763f35c4363562095a0689
-            >(),
-            contract_address_const::<
-                0x121edbee8028cf9ef6c36e823da961c6b2909b51040d0c9cb6f1a4fe4e526ae
-            >(),
-            contract_address_const::<
-                0x7e17ab90d2abf29b1a2b418567067d7f1ce49602feb29ac11901e35fb965e
-            >(),
-            contract_address_const::<
-                0x7b86946381b25725ad72eaf5d2cdf9e87e2b98a70980576d212fa7fcc6c9701
-            >(),
-            contract_address_const::<
-                0x7ca534cebc4aafd9248cbada0d9492d1b10bb6ef86e1a9b8671d13b4607618b
-            >(),
-            contract_address_const::<
-                0xece2ddb6f35cfd1c8cd4fb3adffc65048b15a43e3111030c44036493260797
-            >(),
-            contract_address_const::<
-                0x577b5a148a45f7ed608f8755d0ef01bc0e1b9f3ce7d33a521fc401fba13acc6
-            >(),
-            contract_address_const::<
-                0x179caf1b35202a0a544109cc04caf07a813755d1a15927e025ad874108b0543
-            >(),
-            contract_address_const::<
-                0x3bb2f9c8438bcb334ec763f2a9b5ca8600f630faf4e06f7ae082f669567d5ff
-            >(),
-            contract_address_const::<
-                0x70d63df9b573f86ccd002d78f19b242232f7e108ae8652b7756ff46734d8b35
+                0x5e1093303fef57563f6ccf3dbd5b3f1c3a5eb31c12e256dcb9066f5ca17f5b4
             >(),
             contract_address_const::<
                 0x120531e840199209ee6fb9ce1d6116cb99a7fc60555600f760eecadee14d501
             >(),
             contract_address_const::<
-                0x620b2e12fb8d195ce384512d65fbbddbdea26c4610a49f7630282ea7e55077c
+                0x7fcc1f75713fa89e2abe49a1ecaf034330a5c2c1e0fd25b1d1b832d132e66c1
             >(),
             contract_address_const::<
-                0x5e2080915b9d0315d70f10728071fbd37301e49f4cfef966a410e1498e1b8da
+                0x74d6250850381d59f0f78c86b177f5889910dbf426b13a54a7f3cff62ebd2f0
             >(),
             contract_address_const::<
-                0x4e23f1601ceb2286e71b5cdb523fdd29f55bbfa95a588c9eed122660544bb00
+                0x30ec1a95db39aa5222c20e9b555a00d5be4612e53d76a464edd9f57f3b04851
             >(),
             contract_address_const::<
-                0x438fcf3c887299aeaf6d3ee8ef14626219b7e4eb1f06a0a3a5cbeddb041d1d8
-            >(),
-            contract_address_const::<
-                0x39b92a0ce806da436df96d46790c0eef3fc06a11eba3f19accd17ab20902a9e
-            >(),
-            contract_address_const::<
-                0x3484e299d480b980c420b895850ee01b1c39011731d1b657ecd6fbf142b6939
-            >(),
-            contract_address_const::<
-                0x3bd03a23795cba8f1fa580499b8977c5424f2a8ca433c8fdb17469254331603
+                0x7ca534cebc4aafd9248cbada0d9492d1b10bb6ef86e1a9b8671d13b4607618b
             >(),
             contract_address_const::<
                 0x746c7c6b63513b3ceeda5b6aea12e4f283adf8e42b733a3be7cce96e0427098
             >(),
             contract_address_const::<
+                0x3bd03a23795cba8f1fa580499b8977c5424f2a8ca433c8fdb17469254331603
+            >(),
+            contract_address_const::<
+                0x39b92a0ce806da436df96d46790c0eef3fc06a11eba3f19accd17ab20902a9e
+            >(),
+            contract_address_const::<
+                0x5e2080915b9d0315d70f10728071fbd37301e49f4cfef966a410e1498e1b8da
+            >(),
+            contract_address_const::<
+                0x30157243e521acc690964a8978bd680c5ca969044967892b7c5d0afc221ccab
+            >(),
+            contract_address_const::<
                 0xc2e31a3bd68f09964728c39b475630ae513f376ece9e44cc46644f0de97ab
             >(),
             contract_address_const::<
-                0x66b72a35c87daff2819c28d56345bb9e577485b33a98011ceb475b5d3dac429
+                0x40199f68dc47419aea94f599691b9846606c2344b8a3368462d4395436f8832
             >(),
             contract_address_const::<
-                0x5e653a1c1be68eba18ff4a006ac12a7d27ee70421246805400fd8cc7f7c4ebc
+                0x91549c2fe52f07266a21228406131df81b39a7f4793cf23c8cb30d4c667850
+            >(),
+            contract_address_const::<
+                0x7fbe54431c250c3560ffa44b1d7d57b056e320dade627ff6123466dc081b0b7
+            >(),
+            contract_address_const::<
+                0x39ebc7d76900fcaa88c547d3d5efd229f129ab6a074e2bb3845bc007c844766
+            >(),
+            contract_address_const::<
+                0x485605dcd13fd63d5bea3a53d98f1ea5746d8b61cc6a0a889472bf2ea1abcbf
+            >(),
+            contract_address_const::<
+                0x5888d8f6233c824ea415b3bfc27706f9fe815de69e2c8934e603f857861c04f
+            >(),
+            contract_address_const::<
+                0x612d4df45bdc9c392a26905f8612796c5f9614711f18683f9d6d92187a3d584
+            >(),
+            contract_address_const::<
+                0x6ea70a9f54e9bc122e26a6160c69793ab4faebdf186c1225f48d49412b1da08
+            >(),
+            contract_address_const::<
+                0x4ebcf659b5039b185a5d1b7422be578816cbb6b38ab39ad16a32bb0eaee45f6
+            >(),
+            contract_address_const::<
+                0x3cf06ddb5c66f3a1ec139cdeb67f9b93d18b3e6d24c91590fe926fee3c8188a
+            >(),
+            contract_address_const::<
+                0x8a0d3c539c0e0b46d44f82705105ebafee06960485c0ab86db2fc5496f9ed6
+            >(),
+            contract_address_const::<
+                0x3156478365db748eb2a86af3e16d0a9ae9e4436ef333928afdf943d111faf81
+            >(),
+            contract_address_const::<
+                0x52164d1a84a4de0b9b5314f4d702c540cf280465c2f01f64c70d7b33b234a32
+            >(),
+            contract_address_const::<
+                0x17af00991dc672ebaecb73fb81b9b271c927d6cb56836b1cf7d15bce367a946
+            >(),
+            contract_address_const::<
+                0x5fb052346f4d832f7934ea4defd8c6adede55572a06536242c5aaf0e50f05c7
+            >(),
+            contract_address_const::<
+                0x651573d12842fc1abc7fd7e6cb4152f80ad06f594474615f8955352bb651deb
+            >(),
+            contract_address_const::<
+                0x58fad6f9fafcc7b61f604cdebe16f097bd0d7b1d82bbb32c9e2b8467f06b8a7
+            >(),
+            contract_address_const::<
+                0x24355087dd286e7b633fcfe6eb739f6ba97573b207670235374fd86123085a3
+            >(),
+            contract_address_const::<
+                0x6c1fbe5cf8368a21366295aadb99fd41226c8629d7778fa8748286f9ccb0d0c
+            >(),
+            contract_address_const::<
+                0x3f05e110e360f6e26f423dd7632863e2aa7cd0ae4aadef31a7f92a2d4c2f350
+            >(),
+            contract_address_const::<
+                0x3a2e56bbfc34121dcbaf02a02ee14555166b875886e971204bd9359b42cf1d6
+            >(),
+            contract_address_const::<
+                0x7fe401f65712bdfcdd40704a57f67ecc923291bd8a2983537fb00178d647c13
+            >(),
+            contract_address_const::<
+                0x43f05485eafa41da1cd8442069a72a6264dfced0ad1af298fd235d6df91f735
+            >(),
+            contract_address_const::<
+                0x3b5d43847dcc4384c5fbcd2e1994564bb35c054138e9572d36d2b5e72462a38
+            >(),
+            contract_address_const::<
+                0x5d02a1c7ad144b605002ea9e9c2adfaefd08387c345d60461f472c9736decee
+            >(),
+            contract_address_const::<
+                0xa405c40b2a4ca3baf7344caae1b6cd522762c0d35d757ed0cb27ee32fa1357
+            >(),
+            contract_address_const::<
+                0xe17a9779db4a2adc7558e1be7082e8065fe859cd99f1507c047fe6419eb21c
+            >(),
+            contract_address_const::<
+                0x7f5d8e00b8f018beed1b240ef01df8225828993903381b65f8b12c66559f9fc
+            >(),
+            contract_address_const::<
+                0x4aa2d2061270dfa47df32951171b33fd6c822881edc446513b3e5b1a31607e3
+            >(),
+            contract_address_const::<
+                0x4c8f3f49d3d76a34aa1c3f5381b465d0f4c5ce7feed1fbec919808932d16880
+            >(),
+            contract_address_const::<
+                0x6a4bc059bf193b15bfc064179828c985622de5ad319eb849b12c63916cea730
             >(),
             contract_address_const::<
                 0x23f87b23c9d4690a3edacf7c403fb039fccdc4c455e246364196a26a60d17ea
@@ -1273,37 +1186,166 @@ mod Syndicate {
                 0xa221122b5790c817abeff244a74b23d595d6c6819d10a762fbd2b0f8b29239
             >(),
             contract_address_const::<
-                0x7fcc1f75713fa89e2abe49a1ecaf034330a5c2c1e0fd25b1d1b832d132e66c1
+                0x26ceec16b0a7e2e57aa90f5eaebc241c6d250a035835efc6bf924715d5a3c19
+            >(),
+            contract_address_const::<
+                0x769798a3c7125be92d025bfb14002ab7c18586d3ecc8f36f0c0e002451f9416
+            >(),
+            contract_address_const::<
+                0x32845a5a9b0c507128dd7127576a301729ed968fc137cb7664716fcd8e704a0
+            >(),
+            contract_address_const::<
+                0x5e653a1c1be68eba18ff4a006ac12a7d27ee70421246805400fd8cc7f7c4ebc
             >(),
             contract_address_const::<
                 0x7fb376caff77c932d37b5e3789afa572d3be39721d68f43ff45eb08d1457899
             >(),
             contract_address_const::<
-                0x1ff66960979c44c8d80f7ace2b47caeb4c5ad75cf32cf6ed5d18c0f595a541d
+                0x38bb8bddc04cc2bc651f5e30c7d7da595d5b36c2c636bc9826011ed75ef6e7e
             >(),
             contract_address_const::<
-                0x60bcb2f399193741fecb033822e5bcb1b23612634f96b56a51f82ace0cc021b
+                0x46a72443e95a5944f5b7cece1d2e2f8435a77963b912d8376fa4fc41b0f398f
             >(),
             contract_address_const::<
                 0x47c9c85df18e141f90632989f9aab21c8b744d4fa9e00f59703123b13eaa523
             >(),
             contract_address_const::<
-                0x38bb8bddc04cc2bc651f5e30c7d7da595d5b36c2c636bc9826011ed75ef6e7e
+                0x63cb63d22893aef8bad2d8d123b09542787349198cbb165bef4ce7b533afe21
             >(),
             contract_address_const::<
-                0x49ced74b6309c65bc00ba53ff365d17a3396932cef11c7df31ba8e17c9e1071
+                0x3c75143521a005ebd8828730dddb2da764e9c7fb6605dcae1a661ee4ab45058
             >(),
             contract_address_const::<
-                0x1e6417807946cec75d5950bb347aa689b49ef4940230bcfc34d117399d6798d
+                0x1d3eddff57fd8bf2772c7d8e7603e34f85340b4e1a334afa5d07180e72db7e3
             >(),
             contract_address_const::<
-                0x136685aab972a88d904f59b88deaaea9ef631124a4045074f7fcd9a09756abc
+                0x38f3cadd03b2f87fac9ecd0b4ab13474ba0664e3db6e56ed653539af59d4a00
             >(),
             contract_address_const::<
-                0x55554993ed692e0e8d15ac7a272a9ecd7870a10306addc459fa4f0d376acd0c
+                0x3c97d47df7c6327bb6fe342ca80c486a5177843eeee1f8884ed7d4d7b8e8fa3
             >(),
             contract_address_const::<
-                0x24355087dd286e7b633fcfe6eb739f6ba97573b207670235374fd86123085a3
+                0x60bcb2f399193741fecb033822e5bcb1b23612634f96b56a51f82ace0cc021b
+            >(),
+            contract_address_const::<
+                0x4b1c0be344245ac0f0b1bc21791857a53d368e22ed7455a2411c54615ce96f4
+            >(),
+            contract_address_const::<
+                0x5462bd07df5cd8223ed55457dbacc34839f300ee7486aedddeb0976b465b911
+            >(),
+            contract_address_const::<
+                0x31777a9450c2fa4f1ff347174f1737a859afd81170ecdbb1f195f0898af305b
+            >(),
+            contract_address_const::<
+                0x33b8698bcb5a612f29cc153080d3213ea46545a46010efe25b04f6a525d57f4
+            >(),
+            contract_address_const::<
+                0x170fc25e93098ba290e2b35eafe186c70a7339892bc93bb6fe011cc17e1de82
+            >(),
+            contract_address_const::<
+                0x29993951297c30b5b6b3c967e35632765e539e90654c9fc87bcc5cff29c4cdc
+            >(),
+            contract_address_const::<
+                0x57e890ede07115ef0aa389b2c7de43decf9c2e5092e76b9baab25856a42b69e
+            >(),
+            contract_address_const::<
+                0x72bc9b2b984a57f0daab95b14890c139041cd4c3328d2722c461c8f68f79358
+            >(),
+            contract_address_const::<
+                0x498a356d8d20d581d06ca763d567ff7fc419f620dc7ca6e416c98713ef0b617
+            >(),
+            contract_address_const::<
+                0xf1c169f74df1a1745a5b9a0ba42a245372d6fe21e42098db11785b6d6efaff
+            >(),
+            contract_address_const::<
+                0x3f666b05b3961162ec694734564ccbf049afa5e57fe1272d8b835a29df02e57
+            >(),
+            contract_address_const::<
+                0x872f80d09a42932203ec6ddab79f73268828c9aa29c5966d4c320660e6e847
+            >(),
+            contract_address_const::<
+                0xc396c0076a8aa28bc4373312a7035e75f422a70e87c494655e40753c2d13fe
+            >(),
+            contract_address_const::<
+                0x47c2e95d5b1ca4cfc0f17e2810f356ad36945080dd959ff1d90d2fe8985b69f
+            >(),
+            contract_address_const::<
+                0x1bfd0cf485e021e03a6dd12238f96756c29984351cf5d2c03c17734e4342d6d
+            >(),
+            contract_address_const::<
+                0x13910c9d8dda3fa6330416d6003c2382d257e9c22a1c5ffd2f20069d493f9cf
+            >(),
+            contract_address_const::<
+                0x75c428ceaedf6349905db85c0c6da6e2381bffec9a5122a6c664e5a5d43f077
+            >(),
+            contract_address_const::<
+                0x45f9bc5695f137a6d90dea5f811ad454896ab783c5c7320448bb4e1928d7f19
+            >(),
+            contract_address_const::<
+                0x39482c0b80244fb777efc9e9327add25e5d8c0588dadc7ad16115dd0ce2541
+            >(),
+            contract_address_const::<
+                0x2770a9d4a973e7f66d111998412becaba409469045dc5ba53662d500fd245f0
+            >(),
+            contract_address_const::<
+                0xcd1b505de14500f9266c142b7029825917952ec95fae23661665c68d04f191
+            >(),
+            contract_address_const::<
+                0x81c92f6e157f3f93c1ddd9c332054a99ce6bbd1edda1bf4ad51e1cd323377f
+            >(),
+            contract_address_const::<
+                0x25697a9922bb9cc5421d839ef6a9ea7eed506fe40c4c00e8b27a83ce39aa8f9
+            >(),
+            contract_address_const::<
+                0x66b72a35c87daff2819c28d56345bb9e577485b33a98011ceb475b5d3dac429
+            >(),
+            contract_address_const::<
+                0x7d09ffe79ffbe202fb1ce75bf2117699fcf2a5cf0c5a894ef36b8a99561059f
+            >(),
+            contract_address_const::<
+                0x125cbe5a2d14532d794d4169277a336fef7b6808c688412bd76c978ef25574b
+            >(),
+            contract_address_const::<
+                0x56efa5e1d175a0482c8f47ed9e709e0f058e0c0beaae533297bcd8d097d7d7c
+            >(),
+            contract_address_const::<
+                0x1ed5dde8106315bb414185e1d851c0c0c6b4871e2d084e7f3a6ac1657dd3d19
+            >(),
+            contract_address_const::<
+                0x4617e6fc0736dab08c7e6312769cbb766d59e65ad96a71e4b71d868cf628b1b
+            >(),
+            contract_address_const::<
+                0x37d6e90bfda5a1c498823569873b99b20ae538c0a1dc8e7e0707251e71c2c0f
+            >(),
+            contract_address_const::<
+                0x9de8fa6ae2283733ff9cccd3481621c1ccfcceacd4fe6f72251cf4b991cfbf
+            >(),
+            contract_address_const::<
+                0x3d2ee0de133d84ba27c0f7d9103efa574dc99743ae4b7c7cbd5b97ced5914e
+            >(),
+            contract_address_const::<
+                0x1dd39a78344e6b296c79b8fd06b479f95740070e6b0a2f1d22d00f2e54a72ba
+            >(),
+            contract_address_const::<
+                0x1034c023c08de45759ec01783ac8176e89b37c93797e4f06fa04c8bbc7c38cc
+            >(),
+            contract_address_const::<
+                0x26b5ded122c8920d7940516b91c5df0b5e1b681e59114184f51302cc317306d
+            >(),
+            contract_address_const::<
+                0x1dc8f0c2077757132d16daabc9f9e23336872ac351fd75979f0362dccd1bd49
+            >(),
+            contract_address_const::<
+                0x26f34e739d17d75c1fc1b052fb0b9b06b4f305271935a82b3ba599bbd0d5459
+            >(),
+            contract_address_const::<
+                0x4ff8a37188ebca82092d0ed21442a9920f714d4a0b972ec402a47a65f1adee5
+            >(),
+            contract_address_const::<
+                0x21cfa1ab62008896f10b50d972ed0f53c12eae2cf636b03f47f0962dfdffe6c
+            >(),
+            contract_address_const::<
+                0x302f17a5a997ef73e2cc0db8a1e34b0d446267c5dd619f4b059cdadfd5bc4bd
             >(),
             contract_address_const::<
                 0x68bec988bc834658000dc3f4e41475e74be0638b4410a0e0f55df7c2d7f8b53
@@ -1312,82 +1354,241 @@ mod Syndicate {
                 0x389effea3e1f23faa4a9b63df4a7916a009f4159e6f9c5c3ea2bbdf63e03a22
             >(),
             contract_address_const::<
-                0x5e1093303fef57563f6ccf3dbd5b3f1c3a5eb31c12e256dcb9066f5ca17f5b4
+                0x446d52b79c9aacdc7d96f9a14aa0bd4ff4391c59b6658b45a9b4a878eac298a
             >(),
             contract_address_const::<
-                0x3a2e56bbfc34121dcbaf02a02ee14555166b875886e971204bd9359b42cf1d6
+                0x2fc6d71b746c4c264a2e0d4a972265c365dad0e52778e8b50e2cf48d1b5f048
             >(),
             contract_address_const::<
-                0x33b8698bcb5a612f29cc153080d3213ea46545a46010efe25b04f6a525d57f4
+                0x7e5364d80ac4b321964d851a3a14d96fbc0ea3ee8c7ced3c822299756a5135
             >(),
             contract_address_const::<
-                0x4ebcf659b5039b185a5d1b7422be578816cbb6b38ab39ad16a32bb0eaee45f6
+                0x34dce14d6172fb63c5eb91d03157c01180d6597907e051c43840e413fd5116f
             >(),
             contract_address_const::<
-                0x6ea70a9f54e9bc122e26a6160c69793ab4faebdf186c1225f48d49412b1da08
+                0x1c70d3bab5db43b6a74b62ed2df6df58ce787f2f710d474fab75101de0d622a
             >(),
             contract_address_const::<
-                0x60f1d5a1cf816334c7e698ef67dca8ca254ed828a1b49915e4eea4a048e754e
+                0x215c710b36cb8f097195a04bce89c5a018cde1ef00d5c1ed9abc949333f5d50
             >(),
             contract_address_const::<
-                0x1bfd0cf485e021e03a6dd12238f96756c29984351cf5d2c03c17734e4342d6d
+                0x682e603de580b9f36a1488b0f449ed5285d13e2afd0f31431460a70e1a0f8e6
             >(),
             contract_address_const::<
-                0x065d2ab17338b5affdebaf95e2d79834b5f30bac596ff55563c62c3c98700150
+                0x4e2bc9e8c76166741626ab7c60591de00b253d4f07901d6c35c99cdfda6af39
             >(),
             contract_address_const::<
-                0x07aCD945D8E6055cF8D695CFDa44470CED54EF2F89289F4115d9432c3cC6e542
+                0x3bb2f9c8438bcb334ec763f2a9b5ca8600f630faf4e06f7ae082f669567d5ff
             >(),
             contract_address_const::<
-                0x02848484125285a7B9C94834981BA1Bc57E3aDc078DDA085b469B2E3B96F1823
+                0x12519114a36635fd2d2c0a9a6d4d597d77717d0be6fef94f5b8fe43ff27cef2
             >(),
             contract_address_const::<
-                0x04fc83a1acc0feff13a03f9b388b9e7ba5e6fdf8d62d79f6249a62ffb3f86aa9
+                0x6ac7327a5685322a68956b14fb2eb7c632133356babade0d0e0dc4951a7a457
             >(),
             contract_address_const::<
-                0x015cA28fD82A090E89417bf239F9CC6dF4057AE667823d55de373FEa081bCCC3
+                0x3c41277cddff606aad3b3ddb3b9c875df1230eb18f0d53e6b54f6a290ef3a32
             >(),
             contract_address_const::<
-                0x0462678Bb751Af49F9594500f4D8E3D28F2F26906d4AEDA914864A56F266a47a
+                0x49ced74b6309c65bc00ba53ff365d17a3396932cef11c7df31ba8e17c9e1071
             >(),
             contract_address_const::<
-                0x052f083C7C8f8E83695902e9B42BE85a0f745485Eb3169a5B944af7ada5155F6
+                0x4afd95ca9ce0cd53ac5ab05606d7200cd2922714b744fc3730b07e771a59c9e
             >(),
             contract_address_const::<
-                0x073efd63a329c3967d3d1ebf4d74032553cce8a1309cd0b9f2f3f6c3ae5f4312
+                0x64fb7f85fd9dee10c313696b0aef1f4afc888ce8422edbc2f1695ec5ed152e9
             >(),
             contract_address_const::<
-                0x020d12d89f655485e2e68dc2bb781eb819ea49b4011b43d72652416e5bda81ee
+                0x53183bf5472d0f00e74a2803305e24202906a2c8ed9aadc973bbff80ce23fdd
             >(),
             contract_address_const::<
-                0x076191b819442275f5401d095bd400cf82feffec108dc8fc4f34c6701db7ca7c
+                0x7cc1b280f690c333ae58b69c23eeb64d3547e731b61a3b533df58f532054c63
             >(),
             contract_address_const::<
-                0x05d25ca5cac9cad7bac2a3b1dc97e88a27dd1d2066c713cda5b36ca9b45b05d1
+                0x4afb154d29666cfa0c81dc13f07cccbeafafdb809a9d53e62d73be0489d91fc
             >(),
             contract_address_const::<
-                0x07D4f36860C5C52e68167f470a058713dfa9Ed875Ce6A573B7EE66B680843553
+                0x4c14a51656b294489408a6e435ebdb1e9a1f9390d8e06f66999d11b3927bb15
             >(),
             contract_address_const::<
-                0x0629Ff98f8F674bbE8E04a0ee50dF4895dE93e587C446ba21EB609810D1212A4
+                0x3734654812ca9b65a5cfd94d1001dcdacbe9fb77a583e11433d2e51efd2ebd4
             >(),
             contract_address_const::<
-                0x002D242367651AbCBCA504f3822d4aaE7532789d29169b534C5526D10eFdbd08
+                0x146dc01ddbb52124f3eb755be7d4e8e5e809afe4289874c8f850cec0b5d4ec2
             >(),
             contract_address_const::<
-                0x07496d780651d8971f1e69ea18efec5df0bdbf56e6cce759ee26e5d5fc399f5e
+                0x1d03a3e40088955bc7f5518545d4660892e5a428f5868284bdee9681719b71c
             >(),
             contract_address_const::<
-                0x03d89a08b6732d8153f94c4085566049bd57f3fe553f0fce021fb092d0aa55e9
+                0x7e450124d3bc87d45816f22dfb692615c10b46bfb8b43b03e5f6c5081b8967c
             >(),
             contract_address_const::<
-                0x024ea047f1b9a7b8c2297ce059febbfd651adc9de7341fce5c24682c7c61effc
+                0x5b74d3db24d7ae23684a06202b3cd3228823bc4f2f00439e4eff216f69af47c
             >(),
             contract_address_const::<
-                0x03FCe8C3d56279b77EBEc165d956335D9ea716DaC723dE0b2E73707561809bEe
+                0x4e0853d961c4fd90472ed0002c122bb835fa473d5b97a1831be60c2e8171f48
             >(),
             contract_address_const::<
-                0x008Fe793143AE0c3F00BC50E9572a2c8A1d812d97cB700f9A4E7CF7E432b1F25
+                0x261e5a59278b9324ae189d2f5a52ca82494c138ccdb87119c71f59e7593bc74
+            >(),
+            contract_address_const::<
+                0x51dc6d581310c778fdb8ddc144749145af02e54327c0af7b80fc139b14f69c3
+            >(),
+            contract_address_const::<
+                0x1884ccc2e62af7b27339721b59fe65a4cc6f33bc96aff55948e3cf8903efbde
+            >(),
+            contract_address_const::<
+                0x136685aab972a88d904f59b88deaaea9ef631124a4045074f7fcd9a09756abc
+            >(),
+            contract_address_const::<
+                0x7cc81a4ffc22a22d47d35f2a98570b1d7e4ffab4ee797a7b2139c365a069a0b
+            >(),
+            contract_address_const::<
+                0x796e1c8e5f8bd2a9ed26c331b31d2b71cae8a64af7b471b528899423a6d13fc
+            >(),
+            contract_address_const::<
+                0x7c3b62eadf26a009266902c55aba59b8431f0db92b7ed845a95e8e32d95d0a4
+            >(),
+            contract_address_const::<
+                0x358449709cd33f91c0648cd453c0d58dcef4c7532f79870c4b07b260fa32223
+            >(),
+            contract_address_const::<
+                0x3445ecb45134f986ed85878cec4b86b668831784e8fa7a5d31a5811e572e008
+            >(),
+            contract_address_const::<
+                0x58dffd3361083c20e5ad05667d983b4775c69a9606b8ba032c68aee8af99fc3
+            >(),
+            contract_address_const::<
+                0x23eda0bc17c4ac1946b717d26d347c0f8aef99f2f2605770ff4d07558f5ede
+            >(),
+            contract_address_const::<
+                0x1ff66960979c44c8d80f7ace2b47caeb4c5ad75cf32cf6ed5d18c0f595a541d
+            >(),
+            contract_address_const::<
+                0x5f6a70ce7a5b9268b8a02413f7022be7ca691e797e4361c6cfdeebe99f74c2f
+            >(),
+            contract_address_const::<
+                0x5925e7c6e9f7cef652ace81047acb6870785de444ce8c54010ee9f0cba84d2e
+            >(),
+            contract_address_const::<
+                0x1b8fe907f3355b3e0e8a12aeb7d10dcbcfed1db6c40d806cc4d24c5fd714f7c
+            >(),
+            contract_address_const::<
+                0x508a8cafc8bf9086e8330b3598e1df2824ffa4f18b584abeaeef9204b94f456
+            >(),
+            contract_address_const::<
+                0x7a9b4d1d966aeb29b7cb4330600567b1b31600c199681b3dd2b5e2ab93706c8
+            >(),
+            contract_address_const::<
+                0x2fe3ab8a227465eac78753746202018c758d52cc925f68e5ce17a81514b94b8
+            >(),
+            contract_address_const::<
+                0x1a631295d11cab43e961662a63fe6280eeba5b2c46798fd6a04007266de945e
+            >(),
+            contract_address_const::<
+                0x5bb32e0932a38446d677d07ff6c8ea6d65185416f0c38299f43e94bf3d9837
+            >(),
+            contract_address_const::<
+                0x4ca3b23db188ad04d09d7afedcc67eaca812d30b26af1f88a138ca5536370b0
+            >(),
+            contract_address_const::<
+                0x77c1f1fb27cbe4e44b3ca79fc88f0139570cbeac5f0a59dac221ec6d3b80801
+            >(),
+            contract_address_const::<
+                0x565d7d06eaf55a3682f4643861102e9463edaac323aa11e23cc974d30eb072e
+            >(),
+            contract_address_const::<
+                0x32f49ec0384a70268605910829d4af83f2749e3a88a2ef7d02b508bf3d634f9
+            >(),
+            contract_address_const::<
+                0x56c521cc288a1ea5e518d6127f117619dcb783ee6b61fcc5f875c9b90147fac
+            >(),
+            contract_address_const::<
+                0x38aeeb0ff3ffdce5c07c6239cf3ce21bbb6210981d1527f7e1d35377d285a1c
+            >(),
+            contract_address_const::<
+                0x3b5e2e89932222ec6a194f5504df70f890df737efaf99a2a28d2e108cc4fd08
+            >(),
+            contract_address_const::<
+                0x227fe8f198e580f0fcc15da950a2b65a18fe30764a7d7dca88a64bd367e97bf
+            >(),
+            contract_address_const::<
+                0x28fe3167462efc80c070833199496cb86ca845806bd20f15cc72512baa382bc
+            >(),
+            contract_address_const::<
+                0x6de80d8b790ee6ee7ac69518561bd677a5055409b78e86a8f2aa05cb7893462
+            >(),
+            contract_address_const::<
+                0x15d8e53e091fa8c62c25aac9dd6426bc478959425e3c640d5e78de415d8565
+            >(),
+            contract_address_const::<
+                0x7bf93e2969818b65ef497bfa9d1d17d69a1d326d208f72bffc08332b65a2e9b
+            >(),
+            contract_address_const::<
+                0x7ffbd76f48c9162b81c8d7d6094b1126560a8f70dd0a8c403f4014ad400d540
+            >(),
+            contract_address_const::<
+                0x414b6615b7df626a5bf81c640520617134c1e83c7f321f4febc62b8f804b49b
+            >(),
+            contract_address_const::<
+                0x2744317abbb0db31137623ca3eeedcc80ba7f903c2e52e98c63fc381c9613e8
+            >(),
+            contract_address_const::<
+                0x4ebb483c3cbc67d6167e9a29e9f20f18168a64a7965cb582e750a3e4b8f5b34
+            >(),
+            contract_address_const::<
+                0x4fc83a1acc0feff13a03f9b388b9e7ba5e6fdf8d62d79f6249a62ffb3f86aa9
+            >(),
+            contract_address_const::<
+                0x997125f2e52248f348178b79f6f748fbade312fc85507892bf68c66b07760b
+            >(),
+            contract_address_const::<
+                0x6387f32e17dece61f47ed2748b87bdcf0bd301cff1314fc64a99b42260788a4
+            >(),
+            contract_address_const::<
+                0x1b39a755e074feeb9e2c6a6eeb88e46b1c4f070937da568fde4c0491f0eefea
+            >(),
+            contract_address_const::<
+                0x75449e1c319e9f9957c5529dc485e0b12adb630e6c6186c31c4ac893e34d217
+            >(),
+            contract_address_const::<
+                0x549f25ddc3aa812dac7b7fbf9db0263d3e7987f0586c776a9ca7ad006dc5274
+            >(),
+            contract_address_const::<
+                0x1bb3ad999246b63c2b4bd505cb2c339d809fbca08c6835c3831f0aa92027f91
+            >(),
+            contract_address_const::<
+                0x6e01690cbc61c202afdbf73aa9390e979522a40827e59c2b4563f7dcdd562bb
+            >(),
+            contract_address_const::<
+                0x77620549e448b7cbfacff47c5afac002c404cc7319ef3cfcdf9774f21d34dd2
+            >(),
+            contract_address_const::<
+                0x4214ff313044f9a001ee3e44ba55f2b5a58dd11478a6f51646c6fb650c14a06
+            >(),
+            contract_address_const::<
+                0xfac8a9207cdd55f532c6f8321f3038f55fbe71b5448428b5c5e94d262219be
+            >(),
+            contract_address_const::<
+                0xa0640d6c07b15985cff54547345686f657439149a07fbad2bac50a6ebabf2c
+            >(),
+            contract_address_const::<
+                0x34feae952dc2559b8b684c52ef13619ba835e1d1e6faa02728c93d73b092575
+            >(),
+            contract_address_const::<
+                0x58138799056d7a7b1f2cc381365b80c79d61073f436a970de51a13d320de212
+            >(),
+            contract_address_const::<
+                0x43ef00656285f1c1d11db93b608d3ec943da49fc4430599fe4774cbd86e9fa9
+            >(),
+            contract_address_const::<
+                0x74e085ba86f8af2fda6f9b6975b668956ca9aff5042abf4859414d4b58691e
+            >(),
+            contract_address_const::<
+                0x34445c99330e161fde72fd5ed088cdc412493fa3a7ece0cec75eeb3c11ea5ac
+            >(),
+            contract_address_const::<
+                0x92cc9b7756e6667b654c0b16d9695347af788efbc00a286efe82a6e46bce4b
             >(),
         ]
             .span()
