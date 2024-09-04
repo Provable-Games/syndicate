@@ -1,22 +1,19 @@
 use core::starknet::ContractAddress;
 
-#[starknet::interface]
-trait IGame<T> {
-    fn mint(
-        ref self: T, to: ContractAddress, beast: u8, prefix: u8, suffix: u8, level: u16, health: u16
-    );
-    fn isMinted(self: @T, beast: u8, prefix: u8, suffix: u8) -> bool;
-    fn getMinter(self: @T) -> ContractAddress;
-}
-
 #[starknet::contract]
 mod Syndicate {
-    use super::IERC721Mixin;
-    use core::starknet::{ContractAddress, contract_address_const, storage::{Map}};
+    use super::{IERC721Mixin, ILootSurvivor, ILootSurvivorDispatcher, ILootSurvivorDispatcherTrait};
+    use core::num::traits::Zero;
+
+    use core::starknet::{
+        ContractAddress, contract_address_const, storage::{Map}, get_contract_address,
+        get_caller_address
+    };
     use openzeppelin_token::erc721::erc721::ERC721Component::InternalTrait;
     use openzeppelin_token::erc721::{ERC721Component, ERC721HooksEmptyImpl};
     use openzeppelin_introspection::src5::SRC5Component;
     use syndicate::renderer::create_metadata;
+
 
     component!(path: ERC721Component, storage: erc721, event: ERC721Event);
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
@@ -30,7 +27,9 @@ mod Syndicate {
     #[storage]
     struct Storage {
         _collectionTokenEndIndex: Map::<u8, u16>,
+        _deployer_address: ContractAddress,
         _isCollectionAirdropped: Map::<u8, bool>,
+        _loot_survivor_dispatcher: ILootSurvivorDispatcher,
         #[substorage(v0)]
         erc721: ERC721Component::Storage,
         #[substorage(v0)]
@@ -49,6 +48,7 @@ mod Syndicate {
     #[constructor]
     fn constructor(ref self: ContractState,) {
         self.erc721.initializer("The Syndicate", "SYN", "");
+        self._deployer_address.write(get_caller_address());
     }
 
     #[abi(embed_v0)]
@@ -131,8 +131,17 @@ mod Syndicate {
                 community_id = 9;
             }
 
-            // TODO: Get win from game contract
-            return create_metadata(token_id.try_into().unwrap(), community_id, false);
+            //
+            // check if Syndicate won the LS launch tournament
+            let mut syndicate_won_tournament = false;
+            let loot_survivor_dispatcher = self._loot_survivor_dispatcher.read();
+            if loot_survivor_dispatcher.contract_address.is_non_zero() {
+                let launch_tournament_winner = loot_survivor_dispatcher.get_launch_tournament_winner();
+                syndicate_won_tournament = launch_tournament_winner == get_contract_address();
+            }
+    
+            create_metadata(token_id.try_into().unwrap(), community_id, syndicate_won_tournament)
+
         }
 
         // IERC721CamelOnly
@@ -223,6 +232,23 @@ mod Syndicate {
 
         fn airdrop_loot(ref self: ContractState) {
             _airdrop_loot(ref self);
+        }
+        fn set_loot_survivor_address(ref self: ContractState, address: ContractAddress) {
+            // only deployer can set loot survivor address
+            assert(get_caller_address() == self._deployer_address.read(), 'Not authorized');
+
+            // address can only be set once
+            assert(
+                self._loot_survivor_dispatcher.read().contract_address.is_zero(),
+                'LS address already set'
+            );
+
+            // address cannot be zero
+            assert(address.is_non_zero(), 'LS address cannot be zero');
+
+            // store dispatcher
+            let dispatcher = ILootSurvivorDispatcher { contract_address: address };
+            self._loot_survivor_dispatcher.write(dispatcher);
         }
     }
 
@@ -2119,6 +2145,7 @@ pub trait IERC721Mixin<TState> {
     fn airdrop_defi_spring(ref self: TState);
     fn airdrop_golden_token(ref self: TState);
     fn airdrop_loot(ref self: TState);
+    fn set_loot_survivor_address(ref self: TState, address: ContractAddress);
 }
 
 #[cfg(test)]
@@ -2167,4 +2194,10 @@ mod tests {
         let token_owner = dispatcher.owner_of(515);
         assert(token_owner == last_owner, 'Invalid token owner');
     }
+}
+
+#[starknet::interface]
+trait ILootSurvivor<TContractState> {
+    // @dev this is only function we need for this contract
+    fn get_launch_tournament_winner(self: @TContractState) -> ContractAddress;
 }
