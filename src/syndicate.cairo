@@ -198,40 +198,40 @@ mod Syndicate {
             SRC5::supports_interface(self, interfaceId)
         }
 
-        fn airdrop_dojo(ref self: ContractState) {
-            _airdrop_dojo(ref self);
+        fn airdrop_dojo(ref self: ContractState) -> u16 {
+            _airdrop_dojo(ref self)
         }
 
-        fn airdrop_starkware(ref self: ContractState) {
-            _airdrop_starkware(ref self);
+        fn airdrop_starkware(ref self: ContractState) -> u16 {
+            _airdrop_starkware(ref self)
         }
 
-        fn airdrop_argent(ref self: ContractState) {
-            _airdrop_argent(ref self);
+        fn airdrop_argent(ref self: ContractState) -> u16 {
+            _airdrop_argent(ref self)
         }
 
-        fn airdrop_dope_wars(ref self: ContractState) {
-            _airdrop_dope_wars(ref self);
+        fn airdrop_dope_wars(ref self: ContractState) -> u16 {
+            _airdrop_dope_wars(ref self)
         }
 
-        fn airdrop_1337(ref self: ContractState) {
-            _airdrop_1337(ref self);
+        fn airdrop_1337(ref self: ContractState) -> u16 {
+            _airdrop_1337(ref self)
         }
 
-        fn airdrop_stark_id(ref self: ContractState) {
-            _airdrop_stark_id(ref self);
+        fn airdrop_stark_id(ref self: ContractState) -> u16 {
+            _airdrop_stark_id(ref self)
         }
 
-        fn airdrop_defi_spring(ref self: ContractState) {
-            _airdrop_defi_spring(ref self);
+        fn airdrop_defi_spring(ref self: ContractState) -> u16 {
+            _airdrop_defi_spring(ref self)
         }
 
-        fn airdrop_golden_token(ref self: ContractState) {
-            _airdrop_golden_token(ref self);
+        fn airdrop_golden_token(ref self: ContractState) -> u16 {
+            _airdrop_golden_token(ref self)
         }
 
-        fn airdrop_loot(ref self: ContractState) {
-            _airdrop_loot(ref self);
+        fn airdrop_loot(ref self: ContractState) -> u16 {
+            _airdrop_loot(ref self)
         }
         fn set_loot_survivor_address(ref self: ContractState, address: ContractAddress) {
             // only deployer can set loot survivor address
@@ -266,13 +266,20 @@ mod Syndicate {
         _assert_token_not_airdropped(@self, 1);
         let mut token_count: u16 = 1;
 
-        // mint dojo syndicate addresses
         let mut addresses = get_dojo_addresses();
+        let num_mints = 6;
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
@@ -280,7 +287,6 @@ mod Syndicate {
 
         self._collectionTokenEndIndex.write(1, token_count);
         self._isCollectionAirdropped.write(1, true);
-
         token_count
     }
 
@@ -289,18 +295,24 @@ mod Syndicate {
         _assert_token_airdropped(@self, 1);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(1);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_starkware_addresses();
+        let num_mints = 6;
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
         };
-
         self._collectionTokenEndIndex.write(2, token_count);
         self._isCollectionAirdropped.write(2, true);
 
@@ -312,13 +324,20 @@ mod Syndicate {
         _assert_token_airdropped(@self, 2);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(2);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_argent_addresses();
+        let num_mints = 4;
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
@@ -335,13 +354,20 @@ mod Syndicate {
         _assert_token_airdropped(@self, 3);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(3);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_dope_wars_addresses();
+        let num_mints = 5;
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
@@ -358,13 +384,20 @@ mod Syndicate {
         _assert_token_airdropped(@self, 4);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(4);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_1337_addresses();
+        let num_mints = 6;
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
@@ -381,8 +414,8 @@ mod Syndicate {
         _assert_token_airdropped(@self, 5);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(5);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_stark_id_addresses();
+
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
@@ -392,7 +425,6 @@ mod Syndicate {
                 Option::None(_) => { break; }
             };
         };
-
         self._collectionTokenEndIndex.write(6, token_count);
         self._isCollectionAirdropped.write(6, true);
 
@@ -404,13 +436,20 @@ mod Syndicate {
         _assert_token_airdropped(@self, 6);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(6);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_defi_spring_addresses();
+        let num_mints = 5;
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
@@ -427,13 +466,21 @@ mod Syndicate {
         _assert_token_airdropped(@self, 7);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(7);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_golden_token_addresses();
+        let num_mints = 2;
+
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
@@ -450,17 +497,64 @@ mod Syndicate {
         _assert_token_airdropped(@self, 8);
         let mut token_count: u16 = self._collectionTokenEndIndex.read(8);
 
-        // mint dojo syndicate addresses
         let mut addresses = get_loot_addresses();
+        let num_mints = 7;
+
         loop {
             match addresses.pop_front() {
                 Option::Some(address) => {
-                    self.erc721.mint(*address, token_count.into());
-                    token_count += 1;
+                    let mut mint_count = 0;
+                    loop {
+                        if mint_count == num_mints {
+                            break;
+                        }
+                        self.erc721.mint(*address, token_count.into());
+                        token_count += 1;
+                        mint_count += 1;
+                    }
                 },
                 Option::None(_) => { break; }
             };
         };
+        // we have four remaining NFTs to complete set of 1600, manually minting them to LH and DD
+        // as part of the Loot syndicate
+        self
+            .erc721
+            .mint(
+                contract_address_const::<
+                    0x02dD93bcFc6DcB21083f9E045066c54A45e0AEFB00a6C79eB5286eE0e1801504
+                >(),
+                token_count.into()
+            );
+
+        token_count += 1;
+        self
+            .erc721
+            .mint(
+                contract_address_const::<
+                    0x02dD93bcFc6DcB21083f9E045066c54A45e0AEFB00a6C79eB5286eE0e1801504
+                >(),
+                token_count.into()
+            );
+        token_count += 1;
+        self
+            .erc721
+            .mint(
+                contract_address_const::<
+                    0x065d2AB17338b5AffdEbAF95E2D79834B5f30Bac596fF55563c62C3c98700150
+                >(),
+                token_count.into()
+            );
+        token_count += 1;
+        self
+            .erc721
+            .mint(
+                contract_address_const::<
+                    0x065d2AB17338b5AffdEbAF95E2D79834B5f30Bac596fF55563c62C3c98700150
+                >(),
+                token_count.into()
+            );
+        token_count += 1;
 
         self._collectionTokenEndIndex.write(9, token_count);
         self._isCollectionAirdropped.write(9, true);
@@ -2337,15 +2431,15 @@ pub trait IERC721Mixin<TState> {
     fn supports_interface(self: @TState, interface_id: felt252) -> bool;
     fn supportsInterface(self: @TState, interfaceId: felt252) -> bool;
 
-    fn airdrop_dojo(ref self: TState);
-    fn airdrop_starkware(ref self: TState);
-    fn airdrop_argent(ref self: TState);
-    fn airdrop_dope_wars(ref self: TState);
-    fn airdrop_1337(ref self: TState);
-    fn airdrop_stark_id(ref self: TState);
-    fn airdrop_defi_spring(ref self: TState);
-    fn airdrop_golden_token(ref self: TState);
-    fn airdrop_loot(ref self: TState);
+    fn airdrop_dojo(ref self: TState) -> u16;
+    fn airdrop_starkware(ref self: TState) -> u16;
+    fn airdrop_argent(ref self: TState) -> u16;
+    fn airdrop_dope_wars(ref self: TState) -> u16;
+    fn airdrop_1337(ref self: TState) -> u16;
+    fn airdrop_stark_id(ref self: TState) -> u16;
+    fn airdrop_defi_spring(ref self: TState) -> u16;
+    fn airdrop_golden_token(ref self: TState) -> u16;
+    fn airdrop_loot(ref self: TState) -> u16;
     fn set_loot_survivor_address(ref self: TState, address: ContractAddress);
 }
 
@@ -2366,103 +2460,133 @@ mod tests {
         Syndicate
     };
 
+    // this test exceeds maximum number of events emitted (1000) so it needs to be split up
     // #[test]
-    // fn test_balance_counts() {
+    // fn test_airdrop_all() {
     //     let contract = declare("Syndicate").unwrap();
     //     let (contract_address, _) = contract.deploy(@array![]).unwrap();
+
+    //     // Test address
+    //     let last_owner = starknet::contract_address_const::<
+    //         0x065d2AB17338b5AffdEbAF95E2D79834B5f30Bac596fF55563c62C3c98700150
+    //     >();
+
     //     // Create a dispatcher
     //     let dispatcher = IERC721MixinDispatcher { contract_address };
 
-    //     let dojo_addresses = dispatcher.get_dojo_addresses();
-
-    //     println!("dojo addresses: {}", dojo_addresses);
+    //     dispatcher.airdrop_dojo();
+    //     dispatcher.airdrop_starkware();
+    //     dispatcher.airdrop_argent();
+    //     dispatcher.airdrop_dope_wars();
+    //     dispatcher.airdrop_1337();
+    //     dispatcher.airdrop_stark_id();
+    //     dispatcher.airdrop_defi_spring();
+    //     dispatcher.airdrop_golden_token();
+    //     dispatcher.airdrop_loot();
+    //     let token_owner = dispatcher.owner_of(300);
+    //     assert(token_owner == last_owner, 'Invalid token owner');
     // }
 
     #[test]
-    fn test_erc721_basic_functionality() {
+    fn test_airdrop_dojo() {
         let contract = declare("Syndicate").unwrap();
         let (contract_address, _) = contract.deploy(@array![]).unwrap();
-
-        // Test address
         let last_owner = starknet::contract_address_const::<
-            0x02dD93bcFc6DcB21083f9E045066c54A45e0AEFB00a6C79eB5286eE0e1801504
+            0x05c8Ec0993aFC0D6b928f0c41521bE62708BaCabd3E3bAA988b2DCaaB1aEd801
         >();
 
         // Create a dispatcher
         let dispatcher = IERC721MixinDispatcher { contract_address };
 
+        let num_dojo_address = get_dojo_addresses().len() * 6;
+
         dispatcher.airdrop_dojo();
-        dispatcher.airdrop_starkware();
-        dispatcher.airdrop_argent();
-        dispatcher.airdrop_dope_wars();
-        dispatcher.airdrop_1337();
-        dispatcher.airdrop_stark_id();
-        dispatcher.airdrop_defi_spring();
-        dispatcher.airdrop_golden_token();
-        dispatcher.airdrop_loot();
-        let token_owner = dispatcher.owner_of(515);
+        let token_owner = dispatcher.owner_of(num_dojo_address.into());
         assert(token_owner == last_owner, 'Invalid token owner');
     }
 
-
-    // 2 per Golden Token (160) = 320
-    // 1 per Starknet ID  (256)= 256
-    // 6 per Starkware (39) = 234
-    // 7 per DOJO (43) = 301
-    // 5 per Defi Spring (51) = 255
-    // 1366 SUB TOTAL
-
-    // 234 REMAINING
-    // 5 per Dope Wars (13) = 65
-    // 8 per 1337 (13) = 104
-    // 7 per Loot (9) = 63
-
-    // SUB TOTAL 1598
     #[test]
     fn test_airdrop_counts() {
-        // 5 each
-        let starkware_addresses = get_starkware_addresses();
-        println!("starkware_addresses: {}", starkware_addresses.len());
-        assert(starkware_addresses.len() == 39, 'wrong starkware count');
-
-        // 7 each
+        let dojo_games_per_address = 6;
         let dojo_addresses = get_dojo_addresses();
         println!("dojo_addresses: {}", dojo_addresses.len());
         assert(dojo_addresses.len() == 43, 'wrong dojo count');
+        let total_dojo_games = dojo_addresses.len() * dojo_games_per_address;
 
-        // 7 each
+        let starkware_games_per_address = 6;
+        let starkware_addresses = get_starkware_addresses();
+        println!("starkware_addresses: {}", starkware_addresses.len());
+        assert(starkware_addresses.len() == 39, 'wrong starkware count');
+        let total_starkware_games = starkware_addresses.len() * starkware_games_per_address;
+
+        let argent_games_per_address = 4;
         let argent_addresses = get_argent_addresses();
         println!("argent_addresses: {}", argent_addresses.len());
         assert(argent_addresses.len() == 23, 'wrong argent count');
+        let total_argent_games = argent_addresses.len() * argent_games_per_address;
 
-        // 3 each
+        let dope_wars_games_per_address = 5;
         let dope_wars_addresses = get_dope_wars_addresses();
         println!("dope_wars_addresses: {}", dope_wars_addresses.len());
         assert(dope_wars_addresses.len() == 13, 'wrong dope wars count');
+        let total_dope_wars_games = dope_wars_addresses.len() * dope_wars_games_per_address;
 
-        // 4 each
+        let _1337_games_per_address = 6;
         let _1337_addresses = get_1337_addresses();
         println!("1337_addresses: {}", _1337_addresses.len());
         assert(_1337_addresses.len() == 13, 'wrong 1337 count');
+        let total_1337_games = _1337_addresses.len() * _1337_games_per_address;
 
-        // 1 each
+        let stark_id_games_per_address = 1;
         let stark_id_addresses = get_stark_id_addresses();
         println!("stark_id_addresses: {}", stark_id_addresses.len());
-        //assert(stark_id_addresses.len() == 257, 'wrong stark id count');
+        assert(stark_id_addresses.len() == 231, 'wrong stark id count');
+        let total_stark_id_games = stark_id_addresses.len() * stark_id_games_per_address;
 
-        // 3 each
+        let defi_spring_games_per_address = 5;
         let defi_spring_addresses = get_defi_spring_addresses();
         println!("defi_spring_addresses: {}", defi_spring_addresses.len());
         assert(defi_spring_addresses.len() == 51, 'wrong defi spring count');
+        let total_defi_spring_games = defi_spring_addresses.len() * defi_spring_games_per_address;
 
+        let golden_token_games_per_address = 2;
         let golden_token_addresses = get_golden_token_addresses();
-        // assert length of golden_token_addresses is 160
         println!("golden_token_addresses: {}", golden_token_addresses.len());
         assert(golden_token_addresses.len() == 160, 'wrong golden token count');
+        let total_golden_token_games = golden_token_addresses.len()
+            * golden_token_games_per_address;
 
+        let loot_games_per_address = 7;
         let loot_addresses = get_loot_addresses();
         println!("loot_addresses: {}", loot_addresses.len());
         assert(loot_addresses.len() == 9, 'wrong loot count');
+        let total_loot_games = loot_addresses.len() * loot_games_per_address;
+
+        let remainder_games = 4;
+
+        let total_games = total_starkware_games
+            + total_dojo_games
+            + total_argent_games
+            + total_dope_wars_games
+            + total_1337_games
+            + total_stark_id_games
+            + total_defi_spring_games
+            + total_golden_token_games
+            + total_loot_games
+            + remainder_games;
+
+        println!("total_starkware_games: {}", total_starkware_games);
+        println!("total_dojo_games: {}", total_dojo_games);
+        println!("total_argent_games: {}", total_argent_games);
+        println!("total_dope_wars_games: {}", total_dope_wars_games);
+        println!("total_1337_games: {}", total_1337_games);
+        println!("total_stark_id_games: {}", total_stark_id_games);
+        println!("total_defi_spring_games: {}", total_defi_spring_games);
+        println!("total_golden_token_games: {}", total_golden_token_games);
+        println!("total_loot_games: {}", total_loot_games);
+        println!("remainder_games: {}", remainder_games);
+        println!("total_games: {}", total_games);
+        assert(total_games == 1600, 'total games is wrong');
     }
 }
 
