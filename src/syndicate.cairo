@@ -2446,10 +2446,7 @@ pub trait IERC721Mixin<TState> {
 #[cfg(test)]
 mod tests {
     use core::num::traits::Zero;
-    use snforge_std::{
-        declare, ContractClassTrait, start_cheat_caller_address_global,
-        stop_cheat_caller_address_global
-    };
+    use snforge_std::{declare, ContractClassTrait, stop_cheat_caller_address_global};
     use super::{
         IERC721MixinDispatcher, IERC721MixinDispatcherTrait,
         Syndicate::{
