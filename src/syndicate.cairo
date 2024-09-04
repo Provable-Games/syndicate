@@ -136,12 +136,12 @@ mod Syndicate {
             let mut syndicate_won_tournament = false;
             let loot_survivor_dispatcher = self._loot_survivor_dispatcher.read();
             if loot_survivor_dispatcher.contract_address.is_non_zero() {
-                let launch_tournament_winner = loot_survivor_dispatcher.get_launch_tournament_winner();
+                let launch_tournament_winner = loot_survivor_dispatcher
+                    .get_launch_tournament_winner();
                 syndicate_won_tournament = launch_tournament_winner == get_contract_address();
             }
-    
-            create_metadata(token_id.try_into().unwrap(), community_id, syndicate_won_tournament)
 
+            create_metadata(token_id.try_into().unwrap(), community_id, syndicate_won_tournament)
         }
 
         // IERC721CamelOnly
@@ -2155,7 +2155,15 @@ mod tests {
         declare, ContractClassTrait, start_cheat_caller_address_global,
         stop_cheat_caller_address_global
     };
-    use super::{IERC721MixinDispatcher, IERC721MixinDispatcherTrait, Syndicate::get_dojo_addresses};
+    use super::{
+        IERC721MixinDispatcher, IERC721MixinDispatcherTrait,
+        Syndicate::{
+            get_dojo_addresses, get_golden_token_addresses, get_loot_addresses,
+            get_starkware_addresses, get_argent_addresses, get_dope_wars_addresses,
+            get_1337_addresses, get_defi_spring_addresses, get_stark_id_addresses
+        },
+        Syndicate
+    };
 
     // #[test]
     // fn test_balance_counts() {
@@ -2193,6 +2201,67 @@ mod tests {
         dispatcher.airdrop_loot();
         let token_owner = dispatcher.owner_of(515);
         assert(token_owner == last_owner, 'Invalid token owner');
+    }
+
+
+    // 2 per Golden Token (160) = 320
+    // 1 per Starknet ID  (256)= 256
+    // 6 per Starkware (39) = 234
+    // 7 per DOJO (43) = 301
+    // 5 per Defi Spring (51) = 255
+    // 1366 SUB TOTAL
+
+    // 234 REMAINING
+    // 5 per Dope Wars (13) = 65
+    // 8 per 1337 (13) = 104
+    // 7 per Loot (9) = 63
+
+    // SUB TOTAL 1598
+    #[test]
+    fn test_airdrop_counts() {
+        // 5 each
+        let starkware_addresses = get_starkware_addresses();
+        println!("starkware_addresses: {}", starkware_addresses.len());
+        assert(starkware_addresses.len() == 39, 'wrong starkware count');
+
+        // 7 each
+        let dojo_addresses = get_dojo_addresses();
+        println!("dojo_addresses: {}", dojo_addresses.len());
+        assert(dojo_addresses.len() == 43, 'wrong dojo count');
+
+        // 7 each
+        let argent_addresses = get_argent_addresses();
+        println!("argent_addresses: {}", argent_addresses.len());
+        assert(argent_addresses.len() == 23, 'wrong argent count');
+
+        // 3 each
+        let dope_wars_addresses = get_dope_wars_addresses();
+        println!("dope_wars_addresses: {}", dope_wars_addresses.len());
+        assert(dope_wars_addresses.len() == 13, 'wrong dope wars count');
+
+        // 4 each
+        let _1337_addresses = get_1337_addresses();
+        println!("1337_addresses: {}", _1337_addresses.len());
+        assert(_1337_addresses.len() == 13, 'wrong 1337 count');
+
+        // 1 each
+        let stark_id_addresses = get_stark_id_addresses();
+        println!("stark_id_addresses: {}", stark_id_addresses.len());
+        //assert(stark_id_addresses.len() == 257, 'wrong stark id count');
+
+        // 3 each
+        let defi_spring_addresses = get_defi_spring_addresses();
+        println!("defi_spring_addresses: {}", defi_spring_addresses.len());
+        assert(defi_spring_addresses.len() == 51, 'wrong defi spring count');
+
+        let golden_token_addresses = get_golden_token_addresses();
+        // assert length of golden_token_addresses is 160
+        println!("golden_token_addresses: {}", golden_token_addresses.len());
+        assert(golden_token_addresses.len() == 160, 'wrong golden token count');
+
+        let loot_addresses = get_loot_addresses();
+        println!("loot_addresses: {}", loot_addresses.len());
+        assert(loot_addresses.len() == 9, 'wrong loot count');
     }
 }
 
