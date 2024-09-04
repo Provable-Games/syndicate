@@ -132,7 +132,11 @@ fn get_community_name(communityId: u8) -> ByteArray {
 /// @param community The community name
 /// @return The metadata string
 pub fn create_metadata(token_id: felt252, communityId: u8, win: bool) -> ByteArray {
-    let image = if win { svg_win() } else { svg() };
+    let image = if win {
+        svg_win()
+    } else {
+        svg()
+    };
 
     let base64_image = format!("data:image/svg+xml;base64,{}", bytes_base64_encode(image));
 
@@ -163,13 +167,4 @@ mod tests {
     use core::array::ArrayTrait;
     use super::{create_metadata};
     use snforge_std::{start_cheat_block_timestamp_global};
-
-    #[test]
-    fn test_metadata() {
-        let metadata = create_metadata(1, 1, false);
-        println!("{}", metadata);
-
-        let metadata = create_metadata(1, 1, true);
-        println!("{}", metadata);
-    }
 }
